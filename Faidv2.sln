@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Faidv2", "Faidv2\Faidv2.csproj", "{C331CAE6-F351-4CA7-BCBD-FD911AF8457B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C331CAE6-F351-4CA7-BCBD-FD911AF8457B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C331CAE6-F351-4CA7-BCBD-FD911AF8457B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C331CAE6-F351-4CA7-BCBD-FD911AF8457B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C331CAE6-F351-4CA7-BCBD-FD911AF8457B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D3D94FC-2951-45CF-9C9D-DC5A61764189}
+	EndGlobalSection
+EndGlobal

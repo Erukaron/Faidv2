@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C331CAE6-F351-4CA7-BCBD-FD911AF8457B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Faidv2</RootNamespace>
+    <AssemblyName>Faid</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\Dropbox\Programmierung\Windows\Faidv2\Publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>de</TargetCulture>
+    <PublisherName>Alexander Büchers</PublisherName>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ProgIcon256x256.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1D7337AE992D51B916F1A0EEF7347724BD9840CF</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Faidv2_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Faidv2_TemporaryKey.pfx" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FaidController\Controller.cs" />
+    <Compile Include="FaidModel\BuchungsTyp.cs" />
+    <Compile Include="FaidModel\DateFutureException.cs" />
+    <Compile Include="FaidModel\Konvertierung\BuchungsTyp.cs" />
+    <Compile Include="FaidModel\Konvertierung\DatenV1_4.cs" />
+    <Compile Include="FaidModel\DauerBuchungsTyp.cs" />
+    <Compile Include="FaidModel\DauerEintrag.cs" />
+    <Compile Include="FaidModel\Eintrag.cs" />
+    <Compile Include="FaidModel\EintragSuper.cs" />
+    <Compile Include="FaidModel\Konvertierung\WeitereDatenIndexer.cs" />
+    <Compile Include="FaidModel\Model.cs" />
+    <Compile Include="FaidModel\WeitereDatenIndexer.cs" />
+    <Compile Include="FaidView\M1\M1Ressourcen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>M1Ressourcen.resx</DependentUpon>
+    </Compile>
+    <Compile Include="FaidView\M2\M2Ressourcen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>M2Ressourcen.resx</DependentUpon>
+    </Compile>
+    <Compile Include="FaidView\M1\Maske1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FaidView\M1\Maske1.Designer.cs">
+      <DependentUpon>Maske1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FaidView\M2\Maske2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FaidView\M2\Maske2.Designer.cs">
+      <DependentUpon>Maske2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FaidView\M2\M2Typen.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaidView\M1\M1Ressourcen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>M1Ressourcen.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FaidView\M2\M2Ressourcen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>M2Ressourcen.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FaidView\M1\Maske1.resx">
+      <DependentUpon>Maske1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FaidView\M2\Maske2.resx">
+      <DependentUpon>Maske2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AlexHandyDandyAuxiliaryFunctions">
+      <HintPath>..\..\AlexHandyDandyAuxiliaryFunctions\AlexHandyDandyAuxiliaryFunctions\bin\Debug\AlexHandyDandyAuxiliaryFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CustomControls\CustomControls\bin\Debug\CustomControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ProgIcon.ico" />
+    <Content Include="ProgIcon256x256.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".fa2">
+      <Visible>False</Visible>
+      <Description>Faid v2 Kontodatei</Description>
+      <Progid>Faidv2.exe</Progid>
+      <DefaultIcon>ProgIcon256x256.ico</DefaultIcon>
+    </FileAssociation>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

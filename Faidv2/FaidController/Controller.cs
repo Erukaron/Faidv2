@@ -66,7 +66,6 @@ namespace Faidv2.FaidController
             // ToDo: Periodische Buchungen in dgvBewegung grau hinterlegen
             // ToDo: subtraktionen schriftart leicht rot
             // ToDo: Gleichsetzen Kontostand hellblau hinterlegen
-            // ToDo: Korrekturmodus
             // ToDo: Drag&Drop
 
 

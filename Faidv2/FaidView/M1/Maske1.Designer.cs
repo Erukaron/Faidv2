@@ -47,6 +47,7 @@ namespace Faidv2.FaidView.M1
             this.suchenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loeschenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hinzufuegenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bearbeitenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Contextmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabControl();
@@ -60,9 +61,18 @@ namespace Faidv2.FaidView.M1
             this.tabPeriodische = new System.Windows.Forms.TabPage();
             this.splitContainerEinnahmenAusgabenZinsen = new System.Windows.Forms.SplitContainer();
             this.dgvEinnahmen = new System.Windows.Forms.DataGridView();
+            this.dgvEinnahmenErstellt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvEinnahmenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvEinnahmenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainerAusgabenZinsen = new System.Windows.Forms.SplitContainer();
             this.dgvAusgaben = new System.Windows.Forms.DataGridView();
+            this.dgvAusgabenErstellt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAusgabenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAusgabenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvZinsen = new System.Windows.Forms.DataGridView();
+            this.dgvZinsenErstellt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvZinsenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvZinsenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPlanung = new System.Windows.Forms.TabPage();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelDatei = new System.Windows.Forms.ToolStripStatusLabel();
@@ -73,16 +83,6 @@ namespace Faidv2.FaidView.M1
             this.openFileDialogKonvertierung = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.bearbeitenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgvEinnahmenErstellt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvEinnahmenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvEinnahmenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvAusgabenErstellt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvAusgabenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvAusgabenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvZinsenErstellt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvZinsenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvZinsenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hauptmenu.SuspendLayout();
             this.Contextmenu.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -226,6 +226,14 @@ namespace Faidv2.FaidView.M1
             this.hinzufuegenToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.hinzufuegenToolStripMenuItem.Text = "Hinzufügen";
             this.hinzufuegenToolStripMenuItem.Click += new System.EventHandler(this.hinzufuegenToolStripMenuItem_Click);
+            // 
+            // bearbeitenToolStripMenuItem1
+            // 
+            this.bearbeitenToolStripMenuItem1.Name = "bearbeitenToolStripMenuItem1";
+            this.bearbeitenToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F5)));
+            this.bearbeitenToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            this.bearbeitenToolStripMenuItem1.Text = "Bearbeiten";
+            this.bearbeitenToolStripMenuItem1.Click += new System.EventHandler(this.bearbeitenToolStripMenuItem1_Click);
             // 
             // Contextmenu
             // 
@@ -373,6 +381,29 @@ namespace Faidv2.FaidView.M1
             this.dgvEinnahmen.TabIndex = 0;
             this.dgvEinnahmen.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEinnahmen_CellDoubleClick);
             // 
+            // dgvEinnahmenErstellt
+            // 
+            this.dgvEinnahmenErstellt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvEinnahmenErstellt.HeaderText = "Erstellt";
+            this.dgvEinnahmenErstellt.Name = "dgvEinnahmenErstellt";
+            this.dgvEinnahmenErstellt.ReadOnly = true;
+            this.dgvEinnahmenErstellt.Visible = false;
+            // 
+            // dgvEinnahmenWert
+            // 
+            this.dgvEinnahmenWert.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dgvEinnahmenWert.HeaderText = "Wert";
+            this.dgvEinnahmenWert.Name = "dgvEinnahmenWert";
+            this.dgvEinnahmenWert.ReadOnly = true;
+            this.dgvEinnahmenWert.Width = 55;
+            // 
+            // dgvEinnahmenKommentar
+            // 
+            this.dgvEinnahmenKommentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvEinnahmenKommentar.HeaderText = "Beschreibung";
+            this.dgvEinnahmenKommentar.Name = "dgvEinnahmenKommentar";
+            this.dgvEinnahmenKommentar.ReadOnly = true;
+            // 
             // splitContainerAusgabenZinsen
             // 
             this.splitContainerAusgabenZinsen.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -408,6 +439,29 @@ namespace Faidv2.FaidView.M1
             this.dgvAusgaben.TabIndex = 0;
             this.dgvAusgaben.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAusgaben_CellDoubleClick);
             // 
+            // dgvAusgabenErstellt
+            // 
+            this.dgvAusgabenErstellt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvAusgabenErstellt.HeaderText = "Erstellt";
+            this.dgvAusgabenErstellt.Name = "dgvAusgabenErstellt";
+            this.dgvAusgabenErstellt.ReadOnly = true;
+            this.dgvAusgabenErstellt.Visible = false;
+            // 
+            // dgvAusgabenWert
+            // 
+            this.dgvAusgabenWert.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvAusgabenWert.HeaderText = "Wert";
+            this.dgvAusgabenWert.Name = "dgvAusgabenWert";
+            this.dgvAusgabenWert.ReadOnly = true;
+            this.dgvAusgabenWert.Width = 55;
+            // 
+            // dgvAusgabenKommentar
+            // 
+            this.dgvAusgabenKommentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvAusgabenKommentar.HeaderText = "Beschreibung";
+            this.dgvAusgabenKommentar.Name = "dgvAusgabenKommentar";
+            this.dgvAusgabenKommentar.ReadOnly = true;
+            // 
             // dgvZinsen
             // 
             this.dgvZinsen.AllowUserToAddRows = false;
@@ -424,6 +478,29 @@ namespace Faidv2.FaidView.M1
             this.dgvZinsen.Size = new System.Drawing.Size(786, 127);
             this.dgvZinsen.TabIndex = 0;
             this.dgvZinsen.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvZinsen_CellDoubleClick);
+            // 
+            // dgvZinsenErstellt
+            // 
+            this.dgvZinsenErstellt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvZinsenErstellt.HeaderText = "Erstellt";
+            this.dgvZinsenErstellt.Name = "dgvZinsenErstellt";
+            this.dgvZinsenErstellt.ReadOnly = true;
+            this.dgvZinsenErstellt.Visible = false;
+            // 
+            // dgvZinsenWert
+            // 
+            this.dgvZinsenWert.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvZinsenWert.HeaderText = "Wert";
+            this.dgvZinsenWert.Name = "dgvZinsenWert";
+            this.dgvZinsenWert.ReadOnly = true;
+            this.dgvZinsenWert.Width = 55;
+            // 
+            // dgvZinsenKommentar
+            // 
+            this.dgvZinsenKommentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvZinsenKommentar.HeaderText = "Beschreibung";
+            this.dgvZinsenKommentar.Name = "dgvZinsenKommentar";
+            this.dgvZinsenKommentar.ReadOnly = true;
             // 
             // tabPlanung
             // 
@@ -498,86 +575,6 @@ namespace Faidv2.FaidView.M1
             this.saveFileDialog.DefaultExt = "fa2";
             this.saveFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
             this.saveFileDialog.Title = "Faid v2 Datei speichern";
-            // 
-            // bearbeitenToolStripMenuItem1
-            // 
-            this.bearbeitenToolStripMenuItem1.Name = "bearbeitenToolStripMenuItem1";
-            this.bearbeitenToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F5)));
-            this.bearbeitenToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
-            this.bearbeitenToolStripMenuItem1.Text = "Bearbeiten";
-            this.bearbeitenToolStripMenuItem1.Click += new System.EventHandler(this.bearbeitenToolStripMenuItem1_Click);
-            // 
-            // dgvEinnahmenErstellt
-            // 
-            this.dgvEinnahmenErstellt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgvEinnahmenErstellt.HeaderText = "Erstellt";
-            this.dgvEinnahmenErstellt.Name = "dgvEinnahmenErstellt";
-            this.dgvEinnahmenErstellt.ReadOnly = true;
-            this.dgvEinnahmenErstellt.Visible = false;
-            this.dgvEinnahmenErstellt.Width = 63;
-            // 
-            // dgvEinnahmenWert
-            // 
-            this.dgvEinnahmenWert.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dgvEinnahmenWert.HeaderText = "Wert";
-            this.dgvEinnahmenWert.Name = "dgvEinnahmenWert";
-            this.dgvEinnahmenWert.ReadOnly = true;
-            this.dgvEinnahmenWert.Width = 55;
-            // 
-            // dgvEinnahmenKommentar
-            // 
-            this.dgvEinnahmenKommentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgvEinnahmenKommentar.HeaderText = "Beschreibung";
-            this.dgvEinnahmenKommentar.Name = "dgvEinnahmenKommentar";
-            this.dgvEinnahmenKommentar.ReadOnly = true;
-            // 
-            // dgvAusgabenErstellt
-            // 
-            this.dgvAusgabenErstellt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgvAusgabenErstellt.HeaderText = "Erstellt";
-            this.dgvAusgabenErstellt.Name = "dgvAusgabenErstellt";
-            this.dgvAusgabenErstellt.ReadOnly = true;
-            this.dgvAusgabenErstellt.Visible = false;
-            this.dgvAusgabenErstellt.Width = 63;
-            // 
-            // dgvAusgabenWert
-            // 
-            this.dgvAusgabenWert.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgvAusgabenWert.HeaderText = "Wert";
-            this.dgvAusgabenWert.Name = "dgvAusgabenWert";
-            this.dgvAusgabenWert.ReadOnly = true;
-            this.dgvAusgabenWert.Width = 55;
-            // 
-            // dgvAusgabenKommentar
-            // 
-            this.dgvAusgabenKommentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgvAusgabenKommentar.HeaderText = "Beschreibung";
-            this.dgvAusgabenKommentar.Name = "dgvAusgabenKommentar";
-            this.dgvAusgabenKommentar.ReadOnly = true;
-            // 
-            // dgvZinsenErstellt
-            // 
-            this.dgvZinsenErstellt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgvZinsenErstellt.HeaderText = "Erstellt";
-            this.dgvZinsenErstellt.Name = "dgvZinsenErstellt";
-            this.dgvZinsenErstellt.ReadOnly = true;
-            this.dgvZinsenErstellt.Visible = false;
-            this.dgvZinsenErstellt.Width = 63;
-            // 
-            // dgvZinsenWert
-            // 
-            this.dgvZinsenWert.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgvZinsenWert.HeaderText = "Wert";
-            this.dgvZinsenWert.Name = "dgvZinsenWert";
-            this.dgvZinsenWert.ReadOnly = true;
-            this.dgvZinsenWert.Width = 55;
-            // 
-            // dgvZinsenKommentar
-            // 
-            this.dgvZinsenKommentar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgvZinsenKommentar.HeaderText = "Beschreibung";
-            this.dgvZinsenKommentar.Name = "dgvZinsenKommentar";
-            this.dgvZinsenKommentar.ReadOnly = true;
             // 
             // Maske1
             // 

@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lyKoOgzgjdyqv9kCEzcV5jdzpN7rXaDkwdgT24yFSdA=</dsig:DigestValue>
+        <dsig:DigestValue>YTV/sIbdc/+XUBCfz4Yfrbl0Enu9GHQ2FxuPHuuqIRs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -87,22 +87,22 @@
       <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="ProgIcon.ico" size="6151">
+  <file name="ProgIcon.ico" size="6234">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>UBlxz1IajuzIvvCxWLU7RBRAMOC/+mjIWqdCQcxp4n8=</dsig:DigestValue>
+      <dsig:DigestValue>FujqWuVr7J5qxyA9IgcgHbl2kto/C6jIwlRhM0EXwg8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="ProgIcon256x256.ico" size="6151">
+  <file name="ProgIcon256x256.ico" size="6234">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>UBlxz1IajuzIvvCxWLU7RBRAMOC/+mjIWqdCQcxp4n8=</dsig:DigestValue>
+      <dsig:DigestValue>FujqWuVr7J5qxyA9IgcgHbl2kto/C6jIwlRhM0EXwg8=</dsig:DigestValue>
     </hash>
   </file>
   <fileAssociation extension=".fa2" description="Faid v2 Kontodatei" progid="Faidv2.exe" defaultIcon="ProgIcon256x256.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />

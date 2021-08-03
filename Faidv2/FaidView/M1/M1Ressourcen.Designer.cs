@@ -133,6 +133,15 @@ namespace Faidv2.FaidView.M1 {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Storniere {0}... ähnelt.
+        /// </summary>
+        public static string StorniereBuchung {
+            get {
+                return ResourceManager.GetString("StorniereBuchung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Faid v2 ähnelt.
         /// </summary>
         public static string TitelAllgemein {

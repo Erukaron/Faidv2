@@ -126,6 +126,12 @@
   <data name="BewegungSub" xml:space="preserve">
     <value>Subtraktiv</value>
   </data>
+  <data name="MaskeErfassung" xml:space="preserve">
+    <value>Erfassung</value>
+  </data>
+  <data name="MaskeKorrektur" xml:space="preserve">
+    <value>Korrektur</value>
+  </data>
   <data name="ModusAusgaben" xml:space="preserve">
     <value>Ausgaben</value>
   </data>

@@ -44,7 +44,7 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Typ der Einkommen/Ausgaben
         /// </summary>
-        public DauerBuchungsTyp Typ { get => _typ; }
+        public DauerBuchungsTyp Typ { get => _typ; set => _typ = value;  }
 
         /// <summary>
         /// Falls als Typ Benutzerdefiniert gewählt ist, werden hier die Zeitpunkte gespeichert, zu denen eine Verbuchung ausgeführt wird

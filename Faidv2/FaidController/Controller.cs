@@ -18,7 +18,8 @@ namespace Faidv2.FaidController
     public class Controller
     {
         #region Delegates und Events 
-        public delegate void UebernehmeM2Handler(Model konto, M2ModusTypen modus, DauerBuchungsTyp dauerbuchung, BuchungsTyp bewegung, DateTime datum, decimal wert, string kommentar);
+        public delegate void UebernehmeM2ErfassungHandler(Model konto, M2ModusTypen modus, DauerBuchungsTyp dauerbuchung, BuchungsTyp bewegung, DateTime datum, decimal wert, string kommentar);
+        public delegate void UebernehmeM2KorrekturHandler(EintragBase eintrag, M2ModusTypen modus, DauerBuchungsTyp dauerbuchung, BuchungsTyp bewegung, DateTime datum, decimal wert, string kommentar);
 
         public delegate void SpeichernFehlerEventHandler(object sender, Exception e, string datei);
         public delegate void LadenFehlerEventHandler(object sender, Exception e, string datei);
@@ -63,8 +64,13 @@ namespace Faidv2.FaidController
             // ToDo: .fa2 Dateien zuordnen und mit Doppelklick öffnen
             // ToDo: dgv Einkommen, Ausgaben und Zinsen auf eine Seite untereinander gleiche größe verstellbar
             // ToDo: Periodische Buchungen in dgvBewegung grau hinterlegen
+            // ToDo: subtraktionen schriftart leicht rot
+            // ToDo: Gleichsetzen Kontostand hellblau hinterlegen
+            // ToDo: Korrekturmodus
+            // ToDo: Drag&Drop
 
-            // This no work :(
+
+            // ToDo:  This no work :(
             if (args.Length > 0)
             {
                 if (File.Exists(args[0]))
@@ -91,7 +97,7 @@ namespace Faidv2.FaidController
         }
         #endregion Maske 1
 
-        #region Maske 2 (Erfassung)
+        #region Maske 2 (Erfassung/Korrektur)
         /// <summary>
         /// Startet Maske 2 zur Erfassung einer Dauerbewegung
         /// </summary>
@@ -122,11 +128,11 @@ namespace Faidv2.FaidController
         /// <param name="bewegungTyp">Bewegungstyp bei Modus Bewegung</param>
         private void Erfassung(Model konto, M2ModusTypen modusTyp, DauerBuchungsTyp dauerBuchungsTyp, BuchungsTyp bewegungTyp)
         {
-            UebernehmeM2Handler uebernahmeHandler = UebernehmeM2;
+            UebernehmeM2ErfassungHandler uebernahmeHandler = UebernehmeM2Erfassung;
 
             Maske2 m2;
             if (modusTyp == M2ModusTypen.Bewegung)
-                m2 = new Maske2(this, konto, modusTyp, uebernahmeHandler, bewegungTyp);
+                m2 = new Maske2(this, konto, bewegungTyp, uebernahmeHandler);
             else
                 m2 = new Maske2(this, konto, modusTyp, dauerBuchungsTyp, uebernahmeHandler);
 
@@ -134,7 +140,7 @@ namespace Faidv2.FaidController
         }
 
         /// <summary>
-        /// Von M2 aufgerufen bei Datenübernahme
+        /// Von M2 aufgerufen bei Datenübernahme im Modus Erfassung
         /// </summary>
         /// <param name="konto">Konto</param>
         /// <param name="modus">Art der Übernahme</param>
@@ -143,26 +149,96 @@ namespace Faidv2.FaidController
         /// <param name="datum">Bewegungsdatum</param>
         /// <param name="wert">Wert</param>
         /// <param name="kommentar">Kommentar</param>
-        public void UebernehmeM2(Model konto, M2ModusTypen modus, DauerBuchungsTyp dauerbuchung, BuchungsTyp bewegung, DateTime datum, decimal wert, string kommentar)
+        private void UebernehmeM2Erfassung(Model konto, M2ModusTypen modus, DauerBuchungsTyp dauerbuchung, BuchungsTyp bewegung, DateTime datum, decimal wert, string kommentar)
         {
             switch (modus)
             {
                 case M2ModusTypen.Bewegung:
                     konto.Kontobewegung.Add(new Eintrag(bewegung, datum, wert, kommentar, false));
-                    M1.BeginInvoke((MethodInvoker) delegate { M1.DGVBewegungAktualisieren(); });
                     break;
                 case M2ModusTypen.Einkommen:
                     konto.Einkommen.Add(new DauerEintrag(dauerbuchung, wert, kommentar));
-                    M1.BeginInvoke((MethodInvoker)delegate { M1.DGVEinkommenAktualisieren(); });
                     break;
                 case M2ModusTypen.Ausgaben:
                     konto.Ausgaben.Add(new DauerEintrag(dauerbuchung, wert, kommentar));
-                    M1.BeginInvoke((MethodInvoker)delegate { M1.DGVAusgabenAktualisieren(); });
                     break;
                 case M2ModusTypen.Zinsen:
                     konto.Zinsen.Add(new DauerEintrag(dauerbuchung, wert, kommentar));
-                    M1.BeginInvoke((MethodInvoker)delegate { M1.DGVZinsenAktualisieren(); });
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Startet Maske 2 zur Korrektur einer Bewegung
+        /// </summary>
+        /// <param name="eintrag">Bewegung</param>
+        public void Korrektur(Eintrag eintrag)
+        {
+            Korrektur(eintrag, null, M2ModusTypen.Bewegung);
+        }
+
+        /// <summary>
+        /// Startet Maske 2 zur Korrektur einer Dauerbewegung
+        /// </summary>
+        /// <param name="eintrag">Dauereintrag</param>
+        /// <param name="modus">Art der Dauerbuchung</param>
+        public void Korrektur(DauerEintrag eintrag, M2ModusTypen modus)
+        {
+            Korrektur(null, eintrag, modus);
+        }
+
+        /// <summary>
+        /// Startet Maske 2 zur Korrektur
+        /// </summary>
+        /// <param name="eintrag">Eintrag, falls im Bewegungsmodus zu starten, sonst null</param>
+        /// <param name="dauerEintrag">Dauereintrag, falls im Dauereintragsmodus zu starten, sonst null</param>
+        /// <param name="modus">Art der Dauerbuchung</param>
+        private void Korrektur(Eintrag eintrag, DauerEintrag dauerEintrag, M2ModusTypen modus)
+        {
+            UebernehmeM2KorrekturHandler uebernahmeHandler = UebernehmeM2Korrektur;
+
+            Maske2 m2;
+            if (modus == M2ModusTypen.Bewegung)
+                m2 = new Maske2(this, eintrag, uebernahmeHandler);
+            else
+                m2 = new Maske2(this, dauerEintrag, modus, uebernahmeHandler);
+
+            m2.Show(M1);
+        }
+
+        /// <summary>
+        /// Von M2 aufgerufen bei Datenübernahme im Modus Korrektur
+        /// </summary>
+        /// <param name="konto">Konto</param>
+        /// <param name="eintragBase">Zu korrigierender Eintrag</param>
+        /// <param name="modus">Art der Übernahme</param>
+        /// <param name="dauerbuchung">Typ der Dauerbuchung</param>
+        /// <param name="bewegung">Art der Bewegung</param>
+        /// <param name="datum">Bewegungsdatum</param>
+        /// <param name="wert">Wert</param>
+        /// <param name="kommentar">Kommentar</param>
+        private void UebernehmeM2Korrektur(EintragBase eintragBase, M2ModusTypen modus, DauerBuchungsTyp dauerbuchung, BuchungsTyp bewegung, DateTime datum, decimal wert, string kommentar)
+        {
+            if (eintragBase is Eintrag)
+            {
+                Eintrag eintrag = eintragBase as Eintrag;
+                eintrag.Datum = datum;
+                eintrag.Typ = bewegung;
+                eintrag.Wert = wert;
+                eintrag.Kommentar = kommentar;
+
+                M1.DGVBewegungAktualisieren();
+            }
+            else
+            {
+                DauerEintrag dauerEintrag = eintragBase as DauerEintrag;
+                dauerEintrag.Typ = dauerbuchung;
+                dauerEintrag.Wert = wert;
+                dauerEintrag.Kommentar = kommentar;
+
+                M1.DGVEinkommenAktualisieren();
+                M1.DGVAusgabenAktualisieren();
+                M1.DGVZinsenAktualisieren();
             }
         }
         #endregion Maske 2
@@ -197,9 +273,12 @@ namespace Faidv2.FaidController
 
             try
             {
+                // Serialisiert wird eine DeepCopy des Objekts, da das Objekt selbst höchst wahrscheinlich an mindestens eine Maske gebunden ist und entsprechend nicht serialisiert werden kann.
+                Model zuSpeichern = konto.DeepCopy();
+
                 //Überschreibt die Datei jedes Mal!
                 stream = new FileStream(pfad, FileMode.Create, FileAccess.Write, FileShare.None);
-                formatter.Serialize(stream, konto);
+                formatter.Serialize(stream, zuSpeichern);
             }
             catch (Exception e)
             {

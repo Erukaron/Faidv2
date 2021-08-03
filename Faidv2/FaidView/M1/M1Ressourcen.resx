@@ -141,6 +141,9 @@
   <data name="StdKontoName" xml:space="preserve">
     <value>Neues Konto</value>
   </data>
+  <data name="StorniereBuchung" xml:space="preserve">
+    <value>Storniere {0}...</value>
+  </data>
   <data name="TitelAllgemein" xml:space="preserve">
     <value>Faid v2</value>
   </data>

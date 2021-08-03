@@ -48,6 +48,7 @@ namespace Faidv2.FaidView.M2
             // 
             // comboModus
             // 
+            this.comboModus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboModus.FormattingEnabled = true;
             this.comboModus.Location = new System.Drawing.Point(82, 12);
             this.comboModus.Name = "comboModus";
@@ -56,6 +57,7 @@ namespace Faidv2.FaidView.M2
             // 
             // comboBewegung
             // 
+            this.comboBewegung.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBewegung.Enabled = false;
             this.comboBewegung.FormattingEnabled = true;
             this.comboBewegung.Location = new System.Drawing.Point(82, 39);
@@ -165,6 +167,7 @@ namespace Faidv2.FaidView.M2
             // 
             // comboBoxPeriode
             // 
+            this.comboBoxPeriode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPeriode.FormattingEnabled = true;
             this.comboBoxPeriode.Location = new System.Drawing.Point(82, 39);
             this.comboBoxPeriode.Name = "comboBoxPeriode";

@@ -215,6 +215,7 @@ namespace Faidv2.FaidModel
         public Model DeepCopy()
         {
             Model model = (Model)this.MemberwiseClone();
+            model.KontostandAktualisiert = null; // Ansonsten würde bei Änderung des Kontostands die Maske des ursprünglichen Kontos aktualisiert werden
             model._einkommen = new BindingList<DauerEintrag>(_einkommen);
             model._ausgaben = new BindingList<DauerEintrag>(_ausgaben);
             model._kontobewegung = new BindingList<Eintrag>(_kontobewegung);

@@ -94,7 +94,7 @@
     <Compile Include="FaidModel\DauerBuchungsTyp.cs" />
     <Compile Include="FaidModel\DauerEintrag.cs" />
     <Compile Include="FaidModel\Eintrag.cs" />
-    <Compile Include="FaidModel\EintragSuper.cs" />
+    <Compile Include="FaidModel\EintragBase.cs" />
     <Compile Include="FaidModel\Konvertierung\WeitereDatenIndexer.cs" />
     <Compile Include="FaidModel\Model.cs" />
     <Compile Include="FaidModel\WeitereDatenIndexer.cs" />

@@ -38,27 +38,47 @@ namespace Faidv2.FaidView.M2
         /// <summary>
         /// Callback Funktion, die bei Übernahme der Daten ausgeführt wird
         /// </summary>
-        private Controller.UebernehmeM2Handler _uebernahmeCallback;
+        private Controller.UebernehmeM2ErfassungHandler _uebernahmeErfassungCallback;
+
+        /// <summary>
+        /// Callback Funktion, die bei Übernahme der Daten ausgeführt wird
+        /// </summary>
+        private Controller.UebernehmeM2KorrekturHandler _uebernahmeKorrekturCallback;
+
+        /// <summary>
+        /// Zu korrigierender Eintrag
+        /// </summary>
+        private EintragBase _korrekturEintrag;
         #endregion Felder
 
         #region Konstruktor
         /// <summary>
-        /// Initiailisiert eine neue Instanz der Klasse
+        /// Initialisiert ein neues Objekt der Klasse
         /// </summary>
-        /// <param name="c">Aufrufendes Controller objekt</param>
-        /// <param name="konto">Kontodatei</param>
-        /// <param name="modusTyp">Modus, in dem die Maske aufgerufen werden soll</param>
-        /// <param name="uebernahmeCallback">Callback für die Verarbeitung der erstellten Daten</param>
-        public Maske2(Controller c, Model konto, M2ModusTypen modusTyp, DauerBuchungsTyp perdiodeTyp, Controller.UebernehmeM2Handler uebernahmeCallback)
+        /// <param name="c">Aufrufender Controller</param>
+        private Maske2(Controller c)
         {
             InitializeComponent();
 
             _controller = c;
-            _modusTyp = modusTyp;
-            _uebernahmeCallback = uebernahmeCallback;
-            _konto = konto;
+        }
 
-            dateAnlage.Value = DateTime.Now;
+        /// <summary>
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="modusTyp">Aufrufmodus</param>
+        /// <param name="perdiodeTyp">Dauerbuchungstyp bei Periodischer Verbuchung</param>
+        /// <param name="bewegungTyp">Bewegungstyp bei Bewegung</param>
+        /// <param name="wert">Vorbelegung für Wert Feld</param>
+        /// <param name="kommentar">Vorbelegung für Kommentar Feld</param>
+        private Maske2(Controller c, M2ModusTypen modusTyp, DauerBuchungsTyp perdiodeTyp, BuchungsTyp bewegungTyp, decimal wert = 0, string kommentar = "") : this(c)
+        {
+            _modusTyp = modusTyp;
+
+            textBoxWert.Text = wert.ToString();
+            richTextBoxKommentar.Text = kommentar;
 
             // ToDo: Periode Combobox freischalten, wenn implementiert!
             comboBoxPeriode.Enabled = false;
@@ -85,91 +105,199 @@ namespace Faidv2.FaidView.M2
                     comboModus.Enabled = false;
                     comboModus.Items.Add(M2Ressourcen.ModusBewegung);
                     comboModus.SelectedItem = M2Ressourcen.ModusBewegung;
+
                     comboBoxPeriode.Visible = false;
+
+                    comboBewegung.Items.Add(M2Ressourcen.BewegungAdd);
+                    comboBewegung.Items.Add(M2Ressourcen.BewegungSub);
+                    comboBewegung.Items.Add(M2Ressourcen.BewegungGleich);
                     comboBewegung.Visible = true; // Standardmäßig ausgeblendet, nur angezeigt, wenn Bewegungstyp gefordert
                     break;
+
                 case M2ModusTypen.Einkommen:
                     comboModus.SelectedItem = M2Ressourcen.ModusEinkommen;
                     break;
+
                 case M2ModusTypen.Ausgaben:
                     comboModus.SelectedItem = M2Ressourcen.ModusAusgaben;
                     break;
+
                 case M2ModusTypen.Zinsen:
                     comboModus.SelectedItem = M2Ressourcen.ModusZinsen;
                     break;
             }
 
-            switch (perdiodeTyp)
+            if (perdiodeTyp != DauerBuchungsTyp.Dummy)
             {
-                case DauerBuchungsTyp.Sonntags:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeSonntag;
-                    break;
-                case DauerBuchungsTyp.Montags:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeMontag;
-                    break;
-                case DauerBuchungsTyp.Dienstags:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeDienstag;
-                    break;
-                case DauerBuchungsTyp.Mittwochs:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeMittwoch;
-                    break;
-                case DauerBuchungsTyp.Donnerstags:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeDonnerstag;
-                    break;
-                case DauerBuchungsTyp.Freitags:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeFreitag;
-                    break;
-                case DauerBuchungsTyp.Samstags:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeSamstag;
-                    break;
-                case DauerBuchungsTyp.Woechentlich:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeWoechentlich;
-                    break;
-                case DauerBuchungsTyp.Monatlich:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeMonatlich;
-                    break;
-                case DauerBuchungsTyp.Jaehrlich:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeJaehrlich;
-                    break;
-                case DauerBuchungsTyp.Benutzerdefiniert:
-                    comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeBenutzerdefiniert;
-                    break;
+                switch (perdiodeTyp)
+                {
+                    case DauerBuchungsTyp.Sonntags:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeSonntag;
+                        break;
+                    case DauerBuchungsTyp.Montags:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeMontag;
+                        break;
+                    case DauerBuchungsTyp.Dienstags:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeDienstag;
+                        break;
+                    case DauerBuchungsTyp.Mittwochs:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeMittwoch;
+                        break;
+                    case DauerBuchungsTyp.Donnerstags:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeDonnerstag;
+                        break;
+                    case DauerBuchungsTyp.Freitags:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeFreitag;
+                        break;
+                    case DauerBuchungsTyp.Samstags:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeSamstag;
+                        break;
+                    case DauerBuchungsTyp.Woechentlich:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeWoechentlich;
+                        break;
+                    case DauerBuchungsTyp.Monatlich:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeMonatlich;
+                        break;
+                    case DauerBuchungsTyp.Jaehrlich:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeJaehrlich;
+                        break;
+                    case DauerBuchungsTyp.Benutzerdefiniert:
+                        comboBoxPeriode.SelectedItem = M2Ressourcen.PeriodeBenutzerdefiniert;
+                        break;
+                }
+            }
+
+            if (bewegungTyp != BuchungsTyp.KeinBuchungstyp)
+            {
+                switch (bewegungTyp)
+                {
+                    case BuchungsTyp.Addition:
+                        comboBewegung.SelectedItem = M2Ressourcen.BewegungAdd;
+                        break;
+                    case BuchungsTyp.Subtraktion:
+                        comboBewegung.SelectedItem = M2Ressourcen.BewegungSub;
+                        break;
+                    case BuchungsTyp.Gleichsetzen:
+                        comboBewegung.SelectedItem = M2Ressourcen.BewegungGleich;
+                        break;
+                }
+
+                comboBewegung.Enabled = true;
             }
         }
 
         /// <summary>
-        /// Initiailisiert eine neue Instanz der Klasse
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// Start im Erfassungsmodus
         /// </summary>
-        /// <param name="c">Aufrufendes Controller objekt</param>
-        /// <param name="modusTyp">Modus, in dem die Maske aufgerufen werden soll</param>
-        /// <param name="bewegungTyp">Art der Bewegung</param>
-        /// <throws><c>ArgumentException</c>, wenn der <c>modusTyp</c> nicht Bewegung ist</throws>
-        public Maske2(Controller c, Model konto, M2ModusTypen modusTyp, Controller.UebernehmeM2Handler uebernahmeCallback, BuchungsTyp bewegungTyp) : this(c, konto, modusTyp, DauerBuchungsTyp.Dummy, uebernahmeCallback)
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="konto">Zugrundeliegendes Konto</param>
+        /// <param name="modusTyp"><paramref name="modusTyp"/></param>
+        /// <param name="perdiodeTyp"><paramref name="periodeTyp"/></param>
+        /// <param name="bewegungTyp"><paramref name="bewegungTyp"/></param>
+        /// <param name="uebernahmeCallback">Callback Funktion für die Übernahme der Daten</param>
+        /// <param name="wert"><paramref name="wert"/></param>
+        /// <param name="kommentar"><paramref name="kommentar"/></param>
+        private Maske2(Controller c, Model konto, M2ModusTypen modusTyp, DauerBuchungsTyp periodeTyp, BuchungsTyp bewegungTyp, Controller.UebernehmeM2ErfassungHandler uebernahmeCallback, decimal wert = 0, string kommentar = "")
+            : this(c, modusTyp, periodeTyp, bewegungTyp, wert, kommentar)
         {
-            if (modusTyp == M2ModusTypen.Bewegung)
-                _bewegungTyp = bewegungTyp;
-            else
-                throw new ArgumentException(string.Format("Zur Angabe eines Bewegungstypen muss der Modus Bewegung gewählt werden!"), "modusTypen");
+            _konto = konto;
 
-            comboBewegung.Items.Add(M2Ressourcen.BewegungAdd);
-            comboBewegung.Items.Add(M2Ressourcen.BewegungSub);
-            comboBewegung.Items.Add(M2Ressourcen.BewegungGleich);
+            this.Text = M2Ressourcen.MaskeErfassung;
 
-            switch (bewegungTyp)
-            {
-                case BuchungsTyp.Addition:
-                    comboBewegung.SelectedItem = M2Ressourcen.BewegungAdd;
-                    break;
-                case BuchungsTyp.Subtraktion:
-                    comboBewegung.SelectedItem = M2Ressourcen.BewegungSub;
-                    break;
-                case BuchungsTyp.Gleichsetzen:
-                    comboBewegung.SelectedItem = M2Ressourcen.BewegungGleich;
-                    break;
-            }
+            _uebernahmeErfassungCallback = uebernahmeCallback;
 
-            comboBewegung.Enabled = true;
+            dateAnlage.Value = DateTime.Now;
         }
+
+        /// <summary>
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// Start im Erfassungsmodus
+        /// Erfassung : Periodischer Eintrag
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="konto"><paramref name="konto"/></param>
+        /// <param name="modusTyp"><paramref name="modusTyp"/></param>
+        /// <param name="perdiodeTyp">Dauerbuchungstyp Vorbelegung</param>
+        /// <param name="uebernahmeCallback"><paramref name="uebernahmeCallback"/></param>
+        public Maske2(Controller c, Model konto, M2ModusTypen modusTyp, DauerBuchungsTyp perdiodeTyp, Controller.UebernehmeM2ErfassungHandler uebernahmeCallback) 
+            : this(c, konto, modusTyp, perdiodeTyp, BuchungsTyp.KeinBuchungstyp, uebernahmeCallback)
+        {
+            
+        }
+
+        /// <summary>
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// Start im Erfassungsmodus
+        /// Erfassung : Bewegung
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="konto"><paramref name="konto"/></param>
+        /// <param name="bewegungTyp">Bewegungstyp Vorbelegung</param>
+        /// <param name="uebernahmeCallback"><paramref name="uebernahmeCallback"/></param>
+        public Maske2(Controller c, Model konto, BuchungsTyp bewegungTyp, Controller.UebernehmeM2ErfassungHandler uebernahmeCallback ) 
+            : this(c, konto, M2ModusTypen.Bewegung, DauerBuchungsTyp.Dummy, bewegungTyp, uebernahmeCallback)
+        {
+            dateDatum.Value = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// Start im Korrekturmodus
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="eintragBase">Zu korrigierender Eintrag</param>
+        /// <param name="modusTyp"><paramref name="modusTyp"/></param>
+        /// <param name="perdiodeTyp"><paramref name="periodeTyp"/></param>
+        /// <param name="bewegungTyp"><paramref name="bewegungTyp"/></param>
+        /// <param name="uebernahmeCallback">Callback Funktion für die Übernahme der Daten</param>
+        private Maske2(Controller c, EintragBase eintragBase, M2ModusTypen modusTyp, DauerBuchungsTyp periodeTyp, BuchungsTyp bewegungTyp, Controller.UebernehmeM2KorrekturHandler uebernahmeCallback)
+            : this(c, modusTyp, periodeTyp, bewegungTyp, eintragBase.Wert, eintragBase.Kommentar)
+        {
+            this.Text = M2Ressourcen.MaskeKorrektur;
+
+            _uebernahmeKorrekturCallback = uebernahmeCallback;
+
+            dateAnlage.Value = eintragBase.Erstellt;
+
+            _korrekturEintrag = eintragBase;
+        }
+
+        /// <summary>
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// Start im Korrekturmodus
+        /// Korrektur : Periodischer Eintrag
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="dauerEintrag">Zu korrigierender Dauereintrag</param>
+        /// <param name="modusTyp"><paramref name="modusTyp"/></param>
+        /// <param name="uebernahmeCallback"><paramref name="uebernahmeCallback"/></param>
+        public Maske2(Controller c, DauerEintrag dauerEintrag, M2ModusTypen modusTyp, Controller.UebernehmeM2KorrekturHandler uebernahmeCallback)
+            : this(c, dauerEintrag, modusTyp, dauerEintrag.Typ, BuchungsTyp.KeinBuchungstyp, uebernahmeCallback)
+        {
+            comboModus.Enabled = false;
+        }
+
+        /// <summary>
+        /// Initialisiert ein neues Objekt der Klasse 
+        /// Bereitet die Maske vor
+        /// Start im Korrekturmodus
+        /// Korrektur : Bewegung
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="eintrag">Zu korrigierender Eintrag</param>
+        /// <param name="uebernahmeCallback"><paramref name="uebernahmeCallback"/></param>
+        public Maske2(Controller c, Eintrag eintrag, Controller.UebernehmeM2KorrekturHandler uebernahmeCallback)
+            : this(c, eintrag, M2ModusTypen.Bewegung, DauerBuchungsTyp.Dummy, eintrag.Typ, uebernahmeCallback)
+        {
+            dateDatum.Value = eintrag.Datum;
+        }
+
         #endregion Konstruktor
 
         #region Eigenschaften
@@ -258,6 +386,16 @@ namespace Faidv2.FaidView.M2
                 return DauerBuchungsTyp.Dummy;
             }
         }
+
+        /// <summary>
+        /// Gibt an, ob die Maske im Erfassungsmodus ist
+        /// </summary>
+        private bool IsErfassung { get => _uebernahmeErfassungCallback != null; }
+
+        /// <summary>
+        /// Gibt an, ob die Maske im Korrekturmodus ist
+        /// </summary>
+        private bool IsKorrektur { get => _uebernahmeKorrekturCallback != null; }
         #endregion Eigenschaften
 
         #region Button Events
@@ -269,7 +407,10 @@ namespace Faidv2.FaidView.M2
             }
             else
             {
-                _uebernahmeCallback(_konto, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
+                if (IsErfassung)
+                    _uebernahmeErfassungCallback(_konto, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
+                if (IsKorrektur)
+                    _uebernahmeKorrekturCallback(_korrekturEintrag, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
                 Close();
             }
         }

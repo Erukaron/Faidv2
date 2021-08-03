@@ -51,19 +51,19 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Typ der Verbuchung
         /// </summary>
-        public BuchungsTyp Typ { get => _typ; }
+        public BuchungsTyp Typ { get => _typ; set => _typ = value; }
 
         /// <summary>
         /// Zeitpunkt der Verbuchung
         /// </summary>
-        public DateTime Datum { get => _datum; }
+        public DateTime Datum { get => _datum; set => _datum = value; }
 
         /// <summary>
         /// Gibt an, ob die Verbuchung eine periodische Verbuchung war
         /// </summary>
         public bool PeriodischeVerbuchung { get => _periodischeVerbuchung; }
 
-        // Beim Hinzufügen neuer Eigenschaften müssen diese in Maske1.cs in der Kontoeigenschaft an das dgv gebunden werden!
+        // Beim Hinzufügen neuer Eigenschaften müssen diese in Maske1.cs in der Datenbindung an das dgv gebunden werden!
         #endregion Eigenschaften
     }
 }

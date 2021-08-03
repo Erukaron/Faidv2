@@ -88,6 +88,24 @@ namespace Faidv2.FaidView.M2 {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erfassung ähnelt.
+        /// </summary>
+        public static string MaskeErfassung {
+            get {
+                return ResourceManager.GetString("MaskeErfassung", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Korrektur ähnelt.
+        /// </summary>
+        public static string MaskeKorrektur {
+            get {
+                return ResourceManager.GetString("MaskeKorrektur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ausgaben ähnelt.
         /// </summary>
         public static string ModusAusgaben {

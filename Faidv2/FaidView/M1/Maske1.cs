@@ -99,26 +99,11 @@ namespace Faidv2.FaidView.M1
                 {
                     tabMain.Enabled = true;
                     tabUebersicht.Select();
+
                     toolStripStatusLabelDatei.Text = Konto.Kontoname;
                     toolStripStatusLabelWert.Text = Konto.Kontostand.ToString();
 
-                    // Die beiden Kommentare als Referenz
-                    //Konto.KontostandAktualisiert += delegate { toolStripStatusLabelWert.Text = Konto.Kontostand.ToString(); };
-                    //Konto.KontostandAktualisiert += () => { toolStripStatusLabelWert.Text = Konto.Kontostand.ToString(); };
-                    Konto.KontostandAktualisiert += () => toolStripStatusLabelWert.Text = Konto.Kontostand.ToString();
-
-                    dgvBewegung.DataSource = Konto.Kontobewegung;
-                    dgvBewegung.Columns[0].DataPropertyName = "Typ";
-                    dgvBewegung.Columns[1].DataPropertyName = "Erstellt";
-                    dgvBewegung.Columns[2].DataPropertyName = "Datum";
-                    dgvBewegung.Columns[3].DataPropertyName = "Wert";
-                    dgvBewegung.Columns[4].DataPropertyName = "Kommentar";
-
-                    // ToDo: dgvBewegung Zeilen grau färben bei periodischer buchung
-                    // ToDO: dgvEinnahmen/Ausgaben/Zinsen zusammen fassen -> Kennzeichen setzen
-                    dgvEinnahmen.DataSource = Konto.Einkommen;
-                    dgvAusgaben.DataSource = Konto.Ausgaben;
-                    dgvZinsen.DataSource = Konto.Zinsen;
+                    DatenbasisBinden(Konto);
                 }
             }
         }
@@ -126,22 +111,14 @@ namespace Faidv2.FaidView.M1
 
         #region Menu Events
         #region Datei
-        private void hinzufuegenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (tabUebersicht.ContainsFocus)
-                Ctrl.Erfassung(Konto, BuchungsTyp.Addition);
-            else if (dgvEinnahmen.ContainsFocus)
-                Ctrl.Erfassung(Konto, M2ModusTypen.Einkommen, DauerBuchungsTyp.Monatlich);
-            else if (dgvAusgaben.ContainsFocus)
-                Ctrl.Erfassung(Konto, M2ModusTypen.Ausgaben, DauerBuchungsTyp.Monatlich); 
-            else if (dgvZinsen.ContainsFocus)
-                Ctrl.Erfassung(Konto, M2ModusTypen.Zinsen, DauerBuchungsTyp.Monatlich);
-        }
-
         private void neuStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Konto = Controller.NeuesKonto(Interaction.InputBox(M1Ressourcen.InputKontoName, M1Ressourcen.TitelAllgemein, M1Ressourcen.StdKontoName));
-            _kontoDateipfad = "";
+            string eingabe = Interaction.InputBox(M1Ressourcen.InputKontoName, M1Ressourcen.TitelAllgemein, M1Ressourcen.StdKontoName);
+            if (!eingabe.Equals(""))
+            {
+                Konto = Controller.NeuesKonto(eingabe);
+                _kontoDateipfad = "";
+            }
         }
 
         private void oeffnenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -156,7 +133,7 @@ namespace Faidv2.FaidView.M1
 
         private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!_kontoDateipfad.Equals(""))
+            if (_kontoDateipfad.Equals(""))
                 speichernUnterToolStripMenuItem_Click(sender, e);
             else
                 Ctrl.KontoSpeichern(Konto, _kontoDateipfad);
@@ -164,8 +141,11 @@ namespace Faidv2.FaidView.M1
 
         private void speichernUnterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog.FileName = Path.GetFileName(_kontoDateipfad);
-            saveFileDialog.InitialDirectory = Path.GetFullPath(_kontoDateipfad);
+            if (!_kontoDateipfad.Equals(""))
+            {
+                saveFileDialog.FileName = Path.GetFileName(_kontoDateipfad);
+                saveFileDialog.InitialDirectory = Path.GetFullPath(_kontoDateipfad);
+            }
 
             DialogResult dErg = saveFileDialog.ShowDialog();
             if (dErg == DialogResult.OK)
@@ -205,6 +185,72 @@ namespace Faidv2.FaidView.M1
         #endregion Datei
 
         #region Bearbeiten
+        private void loeschenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabUebersicht.ContainsFocus)
+            {
+                string orig = toolStripStatusLabelDatei.Text;
+                foreach (DataGridViewRow zeile in dgvBewegung.SelectedRows)
+                {
+                    Eintrag eintrag = zeile.DataBoundItem as Eintrag; // Eintrag oder null
+                    if (eintrag is Eintrag) // Eintrag nur, wenn nicht null
+                    {
+                        toolStripStatusLabelDatei.Text = String.Format(M1Ressourcen.StorniereBuchung, eintrag.Kommentar);
+                        Ctrl.Stornieren(Konto, eintrag);
+                    }
+                }
+                toolStripStatusLabelDatei.Text = orig;
+            }
+            else 
+            {
+                DataGridView dgv = null;
+
+                if (dgvEinnahmen.ContainsFocus)
+                    dgv = dgvEinnahmen;
+                else if (dgvAusgaben.ContainsFocus)
+                    dgv = dgvAusgaben;
+                else if (dgvZinsen.ContainsFocus)
+                    dgv = dgvZinsen;
+
+                foreach (DataGridViewRow zeile in dgv.SelectedRows)
+                {
+                    DauerEintrag eintrag = zeile.DataBoundItem as DauerEintrag; // Eintrag oder null
+                    if (eintrag is DauerEintrag) // Eintrag nur, wenn nicht null
+                    {
+                        if (dgvEinnahmen.ContainsFocus)
+                            Ctrl.EinkommenEntfernen(Konto, eintrag);
+                        else if (dgvAusgaben.ContainsFocus)
+                            Ctrl.AusgabenEntfernen(Konto, eintrag);
+                        else if (dgvZinsen.ContainsFocus)
+                            Ctrl.ZinsenEntfernen(Konto, eintrag);
+                    }
+                }
+            }   
+        }
+
+        private void hinzufuegenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabUebersicht.ContainsFocus)
+                Ctrl.Erfassung(Konto, BuchungsTyp.Addition);
+            else if (dgvEinnahmen.ContainsFocus)
+                Ctrl.Erfassung(Konto, M2ModusTypen.Einkommen, DauerBuchungsTyp.Monatlich);
+            else if (dgvAusgaben.ContainsFocus)
+                Ctrl.Erfassung(Konto, M2ModusTypen.Ausgaben, DauerBuchungsTyp.Monatlich);
+            else if (dgvZinsen.ContainsFocus)
+                Ctrl.Erfassung(Konto, M2ModusTypen.Zinsen, DauerBuchungsTyp.Monatlich);
+        }
+
+        private void bearbeitenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (tabUebersicht.ContainsFocus)
+                KorrekturGewaehlteBewegungen();
+            else if (dgvEinnahmen.ContainsFocus)
+                KorrekturGewaehlteEinnahmen();
+            else if (dgvAusgaben.ContainsFocus)
+                KorrekturGewaehlteAusgaben();
+            else if (dgvZinsen.ContainsFocus)
+                KorrekturGewaehlteZinsen();
+        }
         #endregion Bearbeiten
         #endregion Menu Events
 
@@ -226,14 +272,12 @@ namespace Faidv2.FaidView.M1
         /// </summary>
         public void DGVBewegungAktualisieren()
         {
-            /*
-            BindingSource source = new BindingSource();
-            foreach (Eintrag e in Konto.Kontobewegung)
-                source.Add(e);
+            dgvBewegung.Refresh();
+        }
 
-            dgvBewegung.DataSource = source;
-            */
-            // ToDo: DataSource anschauen und dann damit arbeiten, statt die Matrix immer neu zu beschreiben
+        private void dgvBewegung_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            KorrekturGewaehlteBewegungen();
         }
         #endregion Bewegung
 
@@ -243,7 +287,12 @@ namespace Faidv2.FaidView.M1
         /// </summary>
         public void DGVEinkommenAktualisieren()
         {
+            dgvEinnahmen.Refresh();
+        }
 
+        private void dgvEinnahmen_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            KorrekturGewaehlteEinnahmen();
         }
         #endregion Einkommen
 
@@ -253,7 +302,12 @@ namespace Faidv2.FaidView.M1
         /// </summary>
         public void DGVAusgabenAktualisieren()
         {
+            dgvAusgaben.Refresh();
+        }
 
+        private void dgvAusgaben_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            KorrekturGewaehlteAusgaben();
         }
         #endregion Ausgaben
 
@@ -263,7 +317,12 @@ namespace Faidv2.FaidView.M1
         /// </summary>
         public void DGVZinsenAktualisieren()
         {
+            dgvZinsen.Refresh();
+        }
 
+        private void dgvZinsen_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            KorrekturGewaehlteZinsen();
         }
         #endregion Zinsen
 
@@ -311,5 +370,124 @@ namespace Faidv2.FaidView.M1
             Konto = konto;
         }
         #endregion Controller Kommunikation
+
+        #region Methoden
+        /// <summary>
+        /// Bindet die Datenbasis an die Maske
+        /// </summary>
+        /// <param name="konto">Kontodatei</param>
+        private void DatenbasisBinden(Model konto)
+        {
+            // Die drei Kommentare als Referenz
+            //Konto.KontostandAktualisiert += delegate { toolStripStatusLabelWert.Text = Konto.Kontostand.ToString(); };
+            //Konto.KontostandAktualisiert += () => { toolStripStatusLabelWert.Text = Konto.Kontostand.ToString(); };
+            //Konto.KontostandAktualisiert += () => toolStripStatusLabelWert.Text = Konto.Kontostand.ToString();
+            // Hier kann leider keine anonyme Methode verwendet werden, da ansonsten eine Entfernung dieser Methoe beim Entbinden nicht möglich wäre.
+            // Dies ist aber notwendig, damit das Objekt serialisiert werden kann. Ansonsten würde M1 mit serialisiert werden.
+            Konto.KontostandAktualisiert += AktualisiereKontostand;
+
+            dgvBewegung.DataSource = konto.Kontobewegung;
+            dgvBewegung.Columns[0].DataPropertyName = "Typ";
+            dgvBewegung.Columns[1].DataPropertyName = "Erstellt";
+            dgvBewegung.Columns[2].DataPropertyName = "Datum";
+            dgvBewegung.Columns[3].DataPropertyName = "Wert";
+            dgvBewegung.Columns[4].DataPropertyName = "Kommentar";
+
+            // ToDo: dgvBewegung Zeilen grau färben bei periodischer buchung
+            // ToDO: dgvEinnahmen/Ausgaben/Zinsen zusammen fassen -> Kennzeichen setzen
+            dgvEinnahmen.DataSource = konto.Einkommen;
+            dgvEinnahmen.Columns[0].DataPropertyName = "Erstellt";
+            dgvEinnahmen.Columns[1].DataPropertyName = "Wert";
+            dgvEinnahmen.Columns[2].DataPropertyName = "Kommentar";
+            dgvAusgaben.DataSource = konto.Ausgaben;
+            dgvAusgaben.Columns[0].DataPropertyName = "Erstellt";
+            dgvAusgaben.Columns[1].DataPropertyName = "Wert";
+            dgvAusgaben.Columns[2].DataPropertyName = "Kommentar";
+            dgvZinsen.DataSource = konto.Zinsen;
+            dgvZinsen.Columns[0].DataPropertyName = "Erstellt";
+            dgvZinsen.Columns[1].DataPropertyName = "Wert";
+            dgvZinsen.Columns[2].DataPropertyName = "Kommentar";
+        }
+
+        /// <summary>
+        /// Entfernt die Datenbasisbindung an die Maske
+        /// </summary>
+        /// <param name="konto">Kontodatei</param>
+        private void DatenbasisEntbinden(Model konto)
+        {
+            Konto.KontostandAktualisiert -= AktualisiereKontostand;
+
+            dgvBewegung.DataSource = null;
+            dgvEinnahmen.DataSource = null;
+            dgvAusgaben.DataSource = null;
+            dgvZinsen.DataSource = null;
+        }
+
+        /// <summary>
+        /// Event das ausgelöst wird, wenn der Kontostand aktualisiert wird
+        /// </summary>
+        private void AktualisiereKontostand()
+        {
+            toolStripStatusLabelWert.Text = Konto.Kontostand.ToString();
+        }
+
+        /// <summary>
+        /// Korrekturaufruf für gewählte Bewegungen
+        /// </summary>
+        private void KorrekturGewaehlteBewegungen()
+        {
+            foreach (DataGridViewRow zeile in dgvBewegung.SelectedRows)
+            {
+                Eintrag eintrag = zeile.DataBoundItem as Eintrag; // Eintrag oder null
+                if (eintrag is Eintrag) // Eintrag nur, wenn nicht null
+                {
+                    Ctrl.Korrektur(eintrag);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Korrekturaufruf für gewählte Einnahmen
+        /// </summary>
+        private void KorrekturGewaehlteEinnahmen() { KorrekturGewaehlteDauerbuchung(M2ModusTypen.Einkommen); }
+
+        /// <summary>
+        /// Korrekturaufruf für gewählte Einnahmen
+        /// </summary>
+        private void KorrekturGewaehlteAusgaben() { KorrekturGewaehlteDauerbuchung(M2ModusTypen.Ausgaben); }
+
+        /// <summary>
+        /// Korrekturaufruf für gewählte Einnahmen
+        /// </summary>
+        private void KorrekturGewaehlteZinsen() { KorrekturGewaehlteDauerbuchung(M2ModusTypen.Zinsen); }
+
+        /// <summary>
+        /// Korrekturaufruf für gewählte Dauerbuchungen
+        /// </summary>
+        /// <param name="typ">Dauerbuchungstyp</param>
+        private void KorrekturGewaehlteDauerbuchung(M2ModusTypen typ)
+        {
+            DataGridView dgv = null;
+
+            if (typ == M2ModusTypen.Einkommen)
+                dgv = dgvEinnahmen;
+            else if (typ == M2ModusTypen.Ausgaben)
+                dgv = dgvAusgaben;
+            else if (typ == M2ModusTypen.Zinsen)
+                dgv = dgvZinsen;
+
+            if (dgv != null)
+            {
+                foreach (DataGridViewRow zeile in dgv.SelectedRows)
+                {
+                    DauerEintrag eintrag = zeile.DataBoundItem as DauerEintrag; // Eintrag oder null
+                    if (eintrag is DauerEintrag) // Eintrag nur, wenn nicht null
+                    {
+                        Ctrl.Korrektur(eintrag, typ);
+                    }
+                }
+            }
+        }
+        #endregion Methoden
     }
 }

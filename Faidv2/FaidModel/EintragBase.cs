@@ -34,7 +34,7 @@ namespace Faidv2.FaidModel
         /// <param name="kommentar">Kommentar zu jeder Verbuchung</param>
         public EintragBase(decimal wert, string kommentar)
         {
-            _erstellt = DateTime.Now;
+            _erstellt = DateTime.Now.Date;
             _wert = wert;
             _kommentar = kommentar;
         }
@@ -44,7 +44,7 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Erstellungszeitpunkt
         /// </summary>
-        public DateTime Erstellt { get => _erstellt; }
+        public DateTime Erstellt { get => _erstellt.Date; }
 
         /// <summary>
         /// Zu verbuchender Wert

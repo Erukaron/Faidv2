@@ -30,7 +30,6 @@ namespace Faidv2.FaidView.M1
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Maske1));
             this.Hauptmenu = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +82,8 @@ namespace Faidv2.FaidView.M1
             this.openFileDialogKonvertierung = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDateierweiterung = new System.Windows.Forms.ToolStripMenuItem();
             this.Hauptmenu.SuspendLayout();
             this.Contextmenu.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -107,7 +108,8 @@ namespace Faidv2.FaidView.M1
             // 
             this.Hauptmenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
-            this.bearbeitenToolStripMenuItem});
+            this.bearbeitenToolStripMenuItem,
+            this.einstellungenToolStripMenuItem});
             this.Hauptmenu.Location = new System.Drawing.Point(0, 0);
             this.Hauptmenu.Name = "Hauptmenu";
             this.Hauptmenu.Size = new System.Drawing.Size(800, 24);
@@ -279,8 +281,6 @@ namespace Faidv2.FaidView.M1
             // 
             this.dgvBewegung.AllowUserToAddRows = false;
             this.dgvBewegung.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.dgvBewegung.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvBewegung.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBewegung.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Buchungsart,
@@ -295,6 +295,7 @@ namespace Faidv2.FaidView.M1
             this.dgvBewegung.Size = new System.Drawing.Size(786, 394);
             this.dgvBewegung.TabIndex = 0;
             this.dgvBewegung.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBewegung_CellDoubleClick);
+            this.dgvBewegung.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvBewegung_RowPrePaint);
             // 
             // Buchungsart
             // 
@@ -576,6 +577,21 @@ namespace Faidv2.FaidView.M1
             this.saveFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
             this.saveFileDialog.Title = "Faid v2 Datei speichern";
             // 
+            // einstellungenToolStripMenuItem
+            // 
+            this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemDateierweiterung});
+            this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
+            this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.einstellungenToolStripMenuItem.Text = "Einstellungen";
+            // 
+            // toolStripMenuItemDateierweiterung
+            // 
+            this.toolStripMenuItemDateierweiterung.Name = "toolStripMenuItemDateierweiterung";
+            this.toolStripMenuItemDateierweiterung.Size = new System.Drawing.Size(239, 22);
+            this.toolStripMenuItemDateierweiterung.Text = "fa2 Dateierweiterung anmelden";
+            this.toolStripMenuItemDateierweiterung.Click += new System.EventHandler(this.toolStripMenuItemDateierweiterung_Click);
+            // 
             // Maske1
             // 
             this.AllowDrop = true;
@@ -669,5 +685,7 @@ namespace Faidv2.FaidView.M1
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvZinsenErstellt;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvZinsenWert;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvZinsenKommentar;
+        private System.Windows.Forms.ToolStripMenuItem einstellungenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDateierweiterung;
     }
 }

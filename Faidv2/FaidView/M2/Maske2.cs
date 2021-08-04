@@ -408,9 +408,9 @@ namespace Faidv2.FaidView.M2
             else
             {
                 if (IsErfassung)
-                    _uebernahmeErfassungCallback(_konto, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
+                    _uebernahmeErfassungCallback(_konto, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value.Date, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
                 if (IsKorrektur)
-                    _uebernahmeKorrekturCallback(_korrekturEintrag, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
+                    _uebernahmeKorrekturCallback(_korrekturEintrag, ModusTyp, DauerBuchungsTyp, BewegungTyp, dateDatum.Value.Date, decimal.Parse(textBoxWert.Text), richTextBoxKommentar.Text);
                 Close();
             }
         }

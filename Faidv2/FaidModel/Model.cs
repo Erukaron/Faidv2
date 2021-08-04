@@ -76,14 +76,14 @@ namespace Faidv2.FaidModel
         /// <param name="kontoname">Kontoname des zu erstellenden Kontos</param>
         public Model(string kontoname)
         {
-            _kontoname = kontoname;
-            _kontostand = 0;
-            _letztesUpdate = DateTime.Now;
-            _einkommen = new BindingList<DauerEintrag>();
-            _ausgaben = new BindingList<DauerEintrag>();
-            _kontobewegung = new BindingList<Eintrag>();
-            _zinsen = new BindingList<DauerEintrag>();
-            _weitereDaten = new Dictionary<string, object>();
+            Kontoname = kontoname;
+            Kontostand = 0;
+            LetztesUpdate = DateTime.Now;
+            Einkommen = new BindingList<DauerEintrag>();
+            Ausgaben = new BindingList<DauerEintrag>();
+            Kontobewegung = new BindingList<Eintrag>();
+            Zinsen = new BindingList<DauerEintrag>();
+            WeitereDaten = new Dictionary<string, object>();
         }
         #endregion Konstruktor
 
@@ -91,7 +91,7 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Name des Kontos
         /// </summary>
-        public string Kontoname { get => _kontoname; }
+        public string Kontoname { get => _kontoname; private set => _kontoname = value; }
 
         /// <summary>
         /// Kontostand des Kontos
@@ -110,32 +110,32 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Letzte Aktualisierung
         /// </summary>
-        public DateTime LetztesUpdate { get => _letztesUpdate; set => _letztesUpdate = value; }
+        public DateTime LetztesUpdate { get => _letztesUpdate.Date; set => _letztesUpdate = value.Date; }
 
         /// <summary>
         /// Datum des zuletzt ausgeführten periodischen Verbuchungen -> Einkommen, Ausgaben, Zinsen
         /// </summary>
-        public DateTime LetztePeriodischeAusfuehrung { get => _letztePeriodischeAusfuehrung; set => _letztePeriodischeAusfuehrung = value; }
+        public DateTime LetztePeriodischeAusfuehrung { get => _letztePeriodischeAusfuehrung.Date; set => _letztePeriodischeAusfuehrung = value.Date; }
 
         /// <summary>
         /// Liste über Einkommen
         /// </summary>
-        public BindingList<DauerEintrag> Einkommen { get => _einkommen; }
+        public BindingList<DauerEintrag> Einkommen { get => _einkommen; private set => _einkommen = value; }
 
         /// <summary>
         /// Liste über Ausgaben
         /// </summary>
-        public BindingList<DauerEintrag> Ausgaben { get => _ausgaben; }
+        public BindingList<DauerEintrag> Ausgaben { get => _ausgaben; private set => _ausgaben = value; }
 
         /// <summary>
         /// Liste über Kontobewegungen
         /// </summary>
-        public BindingList<Eintrag> Kontobewegung { get => _kontobewegung; }
+        public BindingList<Eintrag> Kontobewegung { get => _kontobewegung; private set => _kontobewegung = value; }
 
         /// <summary>
         /// Liste über Zinsen
         /// </summary>
-        public BindingList<DauerEintrag> Zinsen { get => _zinsen; }
+        public BindingList<DauerEintrag> Zinsen { get => _zinsen; private set => _zinsen = value; }
 
         /// <summary>
         /// Weitere Daten für Erweiterungen
@@ -150,6 +150,8 @@ namespace Faidv2.FaidModel
 
                 return _weitereDaten;
             }
+
+            private set => _weitereDaten = value;
         }
         #endregion Eigenschaften
 
@@ -178,7 +180,7 @@ namespace Faidv2.FaidModel
             }
 
             Kontobewegung.Add(eintrag);
-            LetztesUpdate = DateTime.Now;
+            LetztesUpdate = DateTime.Now.Date;
         }
 
         /// <summary>
@@ -205,7 +207,7 @@ namespace Faidv2.FaidModel
                 }
             }
 
-            LetztesUpdate = DateTime.Now;
+            LetztesUpdate = DateTime.Now.Date;
         }
 
         /// <summary>

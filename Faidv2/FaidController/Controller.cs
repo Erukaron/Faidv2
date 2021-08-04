@@ -59,26 +59,20 @@ namespace Faidv2.FaidController
         public static void Main(string[] args)
         {
             Controller c = new Controller();
-            c.StartM1();
-
-            // ToDo: .fa2 Dateien zuordnen und mit Doppelklick öffnen
-            // ToDo: dgv Einkommen, Ausgaben und Zinsen auf eine Seite untereinander gleiche größe verstellbar
-            // ToDo: Periodische Buchungen in dgvBewegung grau hinterlegen
-            // ToDo: subtraktionen schriftart leicht rot
-            // ToDo: Gleichsetzen Kontostand hellblau hinterlegen
-            // ToDo: Drag&Drop
-
-
-            // ToDo:  This no work :(
+            
+            Model konto = null;
             if (args.Length > 0)
             {
                 if (File.Exists(args[0]))
                 {
-                    Model konto = c.KontoLaden(args[0]);
-                    if (konto != null)
-                        c.M1.AktualisiereKonto(konto);
+                    konto = c.KontoLaden(args[0]);
                 }
             }
+
+            c.StartM1(konto);
+
+            // ToDo: Drag&Drop Prüfe Datei bei DragEnter
+            // ToDo: Legende
         }
 
         #region Maske 1 (Haupt)
@@ -87,10 +81,22 @@ namespace Faidv2.FaidController
         /// </summary>
         private void StartM1()
         {
+            StartM1(null);
+        }
+
+        /// <summary>
+        /// Startet Maske 1
+        /// </summary>
+        /// <param name="konto">Kontodatei, die beim Aufruf mit übergeben werden kann</param>
+        private void StartM1(Model konto)
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            _m1 = new Maske1(this);
+            if (konto == null)
+                _m1 = new Maske1(this);
+            else
+                _m1 = new Maske1(this, konto);
 
             Application.Run(M1);
         }
@@ -153,7 +159,7 @@ namespace Faidv2.FaidController
             switch (modus)
             {
                 case M2ModusTypen.Bewegung:
-                    konto.Kontobewegung.Add(new Eintrag(bewegung, datum, wert, kommentar, false));
+                    konto.Verbuchen(new Eintrag(bewegung, datum, wert, kommentar, false));
                     break;
                 case M2ModusTypen.Einkommen:
                     konto.Einkommen.Add(new DauerEintrag(dauerbuchung, wert, kommentar));

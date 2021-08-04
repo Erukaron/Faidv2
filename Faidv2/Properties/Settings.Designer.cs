@@ -22,5 +22,89 @@ namespace Faidv2.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        public global::System.Drawing.Color StandardZeilenHintergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["StandardZeilenHintergrund"]));
+            }
+            set {
+                this["StandardZeilenHintergrund"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("240, 240, 240")]
+        public global::System.Drawing.Color StandardWechselZeilenHintergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["StandardWechselZeilenHintergrund"]));
+            }
+            set {
+                this["StandardWechselZeilenHintergrund"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160, 255, 255")]
+        public global::System.Drawing.Color PeridischerZeilenHintergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["PeridischerZeilenHintergrund"]));
+            }
+            set {
+                this["PeridischerZeilenHintergrund"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Cyan")]
+        public global::System.Drawing.Color PeriodischerWechselZeilenHintergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["PeriodischerWechselZeilenHintergrund"]));
+            }
+            set {
+                this["PeriodischerWechselZeilenHintergrund"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LemonChiffon")]
+        public global::System.Drawing.Color GleichsetzenZeilenHintergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["GleichsetzenZeilenHintergrund"]));
+            }
+            set {
+                this["GleichsetzenZeilenHintergrund"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Khaki")]
+        public global::System.Drawing.Color GleichsetzenWechselZeilenHintergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["GleichsetzenWechselZeilenHintergrund"]));
+            }
+            set {
+                this["GleichsetzenWechselZeilenHintergrund"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color AbzugZeilenVordergrund {
+            get {
+                return ((global::System.Drawing.Color)(this["AbzugZeilenVordergrund"]));
+            }
+            set {
+                this["AbzugZeilenVordergrund"] = value;
+            }
+        }
     }
 }

@@ -48,6 +48,8 @@ namespace Faidv2.FaidView.M1
 
             dgvBewegung.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBewegung.AutoGenerateColumns = false;
+            dgvBewegung.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.StandardZeilenHintergrund;
+            dgvBewegung.RowsDefaultCellStyle.BackColor = Properties.Settings.Default.StandardWechselZeilenHintergrund;
 
             dgvEinnahmen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvEinnahmen.AutoGenerateColumns = false;
@@ -63,12 +65,23 @@ namespace Faidv2.FaidView.M1
                 toolStripStatusLabelDatei.Text = string.Format(M1Ressourcen.StatusLadefehler, datei);
                 MessageBox.Show(this, e.Message, M1Ressourcen.MsgBoxLadeFehlerUeberschrift, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _kontoDateipfad = ""; // Im Fehlerfall zurücksetzen
+                toolStripStatusLabelWert.Text = "0";
             };
             Ctrl.SpeichernFehler += (object sender, Exception e, string datei) => 
             { 
                 toolStripStatusLabelDatei.Text = string.Format(M1Ressourcen.StatusSpeichernFehler, datei);
                 MessageBox.Show(this, e.Message, M1Ressourcen.MsgBoxSpeichernFehlerUeberschrift, MessageBoxButtons.OK, MessageBoxIcon.Error);
             };
+        }
+
+        /// <summary>
+        /// Initiailisiert eine neue Instanz der Klasse
+        /// </summary>
+        /// <param name="c"><paramref name="c"/></param>
+        /// <param name="konto">Zu ladendes Konto</param>
+        public Maske1(Controller c, Model konto) : this(c)
+        {
+            AktualisiereKonto(konto);
         }
         #endregion Konstruktor
 
@@ -252,6 +265,13 @@ namespace Faidv2.FaidView.M1
                 KorrekturGewaehlteZinsen();
         }
         #endregion Bearbeiten
+
+        #region Einstellungen
+        private void toolStripMenuItemDateierweiterung_Click(object sender, EventArgs e)
+        {
+            AlexHandyDandyAuxiliaryFunctions.FileAssociations.SetAssociation("fa2", "Faidv2.exe", "Faid v2 Kontodatei", Application.ExecutablePath);
+        }
+        #endregion Einstellungen
         #endregion Menu Events
 
         #region Data Grid Views
@@ -278,6 +298,30 @@ namespace Faidv2.FaidView.M1
         private void dgvBewegung_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             KorrekturGewaehlteBewegungen();
+        }
+
+        private void dgvBewegung_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Eintrag eintrag = dgvBewegung.Rows[e.RowIndex].DataBoundItem as Eintrag;
+
+            if (   (eintrag.Typ == BuchungsTyp.Subtraktion && eintrag.Wert > 0)
+                || (eintrag.Typ != BuchungsTyp.Subtraktion && eintrag.Wert < 0) )
+                dgvBewegung.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Properties.Settings.Default.AbzugZeilenVordergrund;
+
+            if (eintrag.PeriodischeVerbuchung)
+            {
+                if (dgvBewegung.Rows[e.RowIndex].InheritedStyle.BackColor == Properties.Settings.Default.StandardZeilenHintergrund)
+                    dgvBewegung.Rows[e.RowIndex].DefaultCellStyle.BackColor = Properties.Settings.Default.PeridischerZeilenHintergrund;
+                else if (dgvBewegung.Rows[e.RowIndex].InheritedStyle.BackColor == Properties.Settings.Default.StandardWechselZeilenHintergrund)
+                    dgvBewegung.Rows[e.RowIndex].DefaultCellStyle.BackColor = Properties.Settings.Default.PeriodischerWechselZeilenHintergrund;
+            }
+            else if (eintrag.Typ == BuchungsTyp.Gleichsetzen)
+            {
+                if (dgvBewegung.Rows[e.RowIndex].InheritedStyle.BackColor == Properties.Settings.Default.StandardZeilenHintergrund)
+                    dgvBewegung.Rows[e.RowIndex].DefaultCellStyle.BackColor = Properties.Settings.Default.GleichsetzenZeilenHintergrund;
+                else if (dgvBewegung.Rows[e.RowIndex].InheritedStyle.BackColor == Properties.Settings.Default.StandardWechselZeilenHintergrund)
+                    dgvBewegung.Rows[e.RowIndex].DefaultCellStyle.BackColor = Properties.Settings.Default.GleichsetzenWechselZeilenHintergrund;
+            }
         }
         #endregion Bewegung
 
@@ -342,10 +386,10 @@ namespace Faidv2.FaidView.M1
 
         private void Maske1_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.Serializable))
+            //if (e.Data.GetDataPresent(DataFormats.Serializable))
                 e.Effect = DragDropEffects.Link;
-            else
-                e.Effect = DragDropEffects.None;
+            //else
+            //    e.Effect = DragDropEffects.None;
         }
         #endregion Drag&Drop
 
@@ -353,7 +397,7 @@ namespace Faidv2.FaidView.M1
         private void toolStripStatusLabelWert_TextChanged(object sender, EventArgs e)
         {
             if (decimal.Parse(toolStripStatusLabelWert.Text) < 0)
-                toolStripStatusLabelWert.ForeColor = Color.Red;
+                toolStripStatusLabelWert.ForeColor = Properties.Settings.Default.AbzugZeilenVordergrund;
             else
                 toolStripStatusLabelWert.ForeColor = Color.Black;
         }

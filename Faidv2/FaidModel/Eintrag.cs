@@ -41,9 +41,9 @@ namespace Faidv2.FaidModel
             if (datum > DateTime.Now)
                 throw new DateFutureException(String.Format("Das angegebene Datum {0} liegt in der Zukunft!", datum));
 
-            _typ = typ;
-            _datum = datum;
-            _periodischeVerbuchung = periodischeVerbuchung;
+            Typ = typ;
+            Datum = datum;
+            PeriodischeVerbuchung = periodischeVerbuchung;
         }
         #endregion Konstruktor
 
@@ -56,12 +56,12 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Zeitpunkt der Verbuchung
         /// </summary>
-        public DateTime Datum { get => _datum; set => _datum = value; }
+        public DateTime Datum { get => _datum.Date; set => _datum = value.Date; }
 
         /// <summary>
         /// Gibt an, ob die Verbuchung eine periodische Verbuchung war
         /// </summary>
-        public bool PeriodischeVerbuchung { get => _periodischeVerbuchung; }
+        public bool PeriodischeVerbuchung { get => _periodischeVerbuchung; private set => _periodischeVerbuchung = value; }
 
         // Beim Hinzufügen neuer Eigenschaften müssen diese in Maske1.cs in der Datenbindung an das dgv gebunden werden!
         #endregion Eigenschaften

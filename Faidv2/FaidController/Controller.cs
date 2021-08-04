@@ -12,6 +12,8 @@ using Faidv2.FaidView.M2;
 using System.Windows.Forms;
 using Faidv2.Properties;
 using System.ComponentModel;
+using Faidv2.FaidView.M3;
+using Faidv2.FaidModel.Selektion;
 
 namespace Faidv2.FaidController
 {
@@ -247,6 +249,30 @@ namespace Faidv2.FaidController
             }
         }
         #endregion Maske 2
+
+        #region Maske 3
+        /// <summary>
+        /// Startet Maske 3 zur Bearbeitung von Selektionen
+        /// </summary>
+        public void SelektionBearbeiten()
+        {
+            SelektionBearbeiten(null);
+        }
+
+        /// <summary>
+        /// Startet Maske 3 zur Bearbeitung von Selektionen
+        /// </summary>
+        /// <param name="liste">Zu bearbeitende Selektionsliste</param>
+        public void SelektionBearbeiten(List<SelektionBase> liste)
+        {
+            Maske3 m3;
+            if (liste == null)
+                m3 = new Maske3();
+            else
+                m3 = new Maske3(liste);
+            m3.Show(M1);
+        }
+        #endregion Maske 3
 
         #region Anlage, Speichern, Laden
         /// <summary>

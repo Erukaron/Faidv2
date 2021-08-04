@@ -44,9 +44,13 @@ namespace Faidv2.FaidView.M1
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suchenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selektionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.loeschenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hinzufuegenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bearbeitenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDateierweiterung = new System.Windows.Forms.ToolStripMenuItem();
             this.Contextmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabControl();
@@ -82,8 +86,6 @@ namespace Faidv2.FaidView.M1
             this.openFileDialogKonvertierung = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDateierweiterung = new System.Windows.Forms.ToolStripMenuItem();
             this.Hauptmenu.SuspendLayout();
             this.Contextmenu.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -199,6 +201,8 @@ namespace Faidv2.FaidView.M1
             // 
             this.bearbeitenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.suchenToolStripMenuItem,
+            this.selektionToolStripMenuItem,
+            this.toolStripSeparator4,
             this.loeschenToolStripMenuItem,
             this.hinzufuegenToolStripMenuItem,
             this.bearbeitenToolStripMenuItem1});
@@ -212,6 +216,19 @@ namespace Faidv2.FaidView.M1
             this.suchenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
             this.suchenToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.suchenToolStripMenuItem.Text = "Suchen";
+            // 
+            // selektionToolStripMenuItem
+            // 
+            this.selektionToolStripMenuItem.Name = "selektionToolStripMenuItem";
+            this.selektionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F2)));
+            this.selektionToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.selektionToolStripMenuItem.Text = "Selektion";
+            this.selektionToolStripMenuItem.Click += new System.EventHandler(this.selektionToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
             // 
             // loeschenToolStripMenuItem
             // 
@@ -236,6 +253,21 @@ namespace Faidv2.FaidView.M1
             this.bearbeitenToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
             this.bearbeitenToolStripMenuItem1.Text = "Bearbeiten";
             this.bearbeitenToolStripMenuItem1.Click += new System.EventHandler(this.bearbeitenToolStripMenuItem1_Click);
+            // 
+            // einstellungenToolStripMenuItem
+            // 
+            this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemDateierweiterung});
+            this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
+            this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.einstellungenToolStripMenuItem.Text = "Einstellungen";
+            // 
+            // toolStripMenuItemDateierweiterung
+            // 
+            this.toolStripMenuItemDateierweiterung.Name = "toolStripMenuItemDateierweiterung";
+            this.toolStripMenuItemDateierweiterung.Size = new System.Drawing.Size(239, 22);
+            this.toolStripMenuItemDateierweiterung.Text = "fa2 Dateierweiterung anmelden";
+            this.toolStripMenuItemDateierweiterung.Click += new System.EventHandler(this.toolStripMenuItemDateierweiterung_Click);
             // 
             // Contextmenu
             // 
@@ -577,21 +609,6 @@ namespace Faidv2.FaidView.M1
             this.saveFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
             this.saveFileDialog.Title = "Faid v2 Datei speichern";
             // 
-            // einstellungenToolStripMenuItem
-            // 
-            this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemDateierweiterung});
-            this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
-            this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
-            this.einstellungenToolStripMenuItem.Text = "Einstellungen";
-            // 
-            // toolStripMenuItemDateierweiterung
-            // 
-            this.toolStripMenuItemDateierweiterung.Name = "toolStripMenuItemDateierweiterung";
-            this.toolStripMenuItemDateierweiterung.Size = new System.Drawing.Size(239, 22);
-            this.toolStripMenuItemDateierweiterung.Text = "fa2 Dateierweiterung anmelden";
-            this.toolStripMenuItemDateierweiterung.Click += new System.EventHandler(this.toolStripMenuItemDateierweiterung_Click);
-            // 
             // Maske1
             // 
             this.AllowDrop = true;
@@ -687,5 +704,7 @@ namespace Faidv2.FaidView.M1
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvZinsenKommentar;
         private System.Windows.Forms.ToolStripMenuItem einstellungenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDateierweiterung;
+        private System.Windows.Forms.ToolStripMenuItem selektionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }

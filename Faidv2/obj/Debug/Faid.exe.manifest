@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Faid.exe" size="90584">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Faid.exe" size="104408">
       <assemblyIdentity name="Faid" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DJuKHpg3Xke9tX7eoV1N4fGHfoYKXaTRtDorDiaKN00=</dsig:DigestValue>
+        <dsig:DigestValue>IL28HeigsjbTyqv3Mdhu6xRq9CyrE2PI4WSNSldbrDk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

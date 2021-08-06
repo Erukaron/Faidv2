@@ -162,29 +162,30 @@ namespace Faidv2.FaidView.M1
         /// <summary>
         /// Element wird an Datagridview gebunden
         /// </summary>
-        private BindingList<Eintrag> Bewegungen { get => _bewegungen ?? new BindingList<Eintrag>(); }
+        private BindingList<Eintrag> Bewegungen
+        {
+            get
+            {
+                if (_bewegungen is null)
+                    _bewegungen = new BindingList<Eintrag>();
 
-        /*
-        /// <summary>
-        /// Element wird an Datagridview gebunden
-        /// </summary>
-        private BindingList<DauerEintrag> Einkommen { get => _einkommen ?? new BindingList<DauerEintrag>(); }
-
-        /// <summary>
-        /// Element wird an Datagridview gebunden
-        /// </summary>
-        private BindingList<DauerEintrag> Ausgaben { get => _ausgaben ?? new BindingList<DauerEintrag>(); }
-
-        /// <summary>
-        /// Element wird an Datagridview gebunden
-        /// </summary>
-        private BindingList<DauerEintrag> Zinsen { get => _zinsen ?? new BindingList<DauerEintrag>(); }
-        */
+                return _bewegungen;
+            }
+        }
 
         /// <summary>
         /// Die Liste über die aktuelle Selektion
         /// </summary>
-        private List<SelektionBase> Selektion { get => _selektion ?? new List<SelektionBase>(); }
+        private List<SelektionBase> Selektion 
+        {
+            get
+            {
+                if (_selektion is null)
+                    _selektion = new List<SelektionBase>();
+
+                return _selektion;
+            }
+        }
         #endregion Eigenschaften
 
         #region Menu Events
@@ -267,45 +268,8 @@ namespace Faidv2.FaidView.M1
         {
             Ctrl.SelektionBearbeiten(Selektion);
 
-            // Test
-            Selektion.Add(new SelektionGroesse(false, false, 50));
-
-            List<Eintrag> arbeitskopie = new List<Eintrag>();
-
-            // Einschließende Selektion über Zeichenkette
-            foreach (SelektionZeichenkette sele in Selektion.Where(x => !x.IsAusschliessendeSelektion))
-            {
-                arbeitskopie.Concat(Bewegungen.Where(x => x.Kommentar.Equals(sele.GetWert())));
-            }
-
-            // Einschließende Selektion über Größe
-            foreach (SelektionGroesse sele in Selektion.Where(x => !x.IsAusschliessendeSelektion))
-            {
-                if (sele.IsKleiner)
-                    arbeitskopie.Concat(Bewegungen.Where(x => x.Wert < sele.GetWert()));
-                else
-                    arbeitskopie.Concat(Bewegungen.Where(x => x.Wert > sele.GetWert()));
-            }
-
-            arbeitskopie = arbeitskopie.Distinct().ToList();
-
-            // Ausschließende Selektion über Zeichenkette
-            foreach (SelektionZeichenkette sele in Selektion.Where(x => x.IsAusschliessendeSelektion))
-            {
-                arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Kommentar.Equals(sele.GetWert()))).ToList();
-            }
-
-            // Ausschließende Selektion über Größe
-            foreach (SelektionGroesse sele in Selektion.Where(x => x.IsAusschliessendeSelektion))
-            {
-                if (sele.IsKleiner)
-                    arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Wert < sele.GetWert())).ToList();
-                else
-                    arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Wert > sele.GetWert())).ToList();
-            }
-
-            Bewegungen.Clear();
-            Bewegungen.Concat(arbeitskopie);
+            if (!(Konto is null))
+                SelektionAnwenden(Selektion);
         }
 
         private void loeschenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -641,6 +605,64 @@ namespace Faidv2.FaidView.M1
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Wendet die Selektion auf die im DGV-befindlichen Elemente an
+        /// </summary>
+        /// <param name="selektion">Anzuwendene Selektionsauflistung</param>
+        private void SelektionAnwenden(List<SelektionBase> selektion)
+        {
+            // ToDo : Konto.Kontobewegungen in Bewegungen ändern -> Entsprechend dgv anpassen
+            bool isEinschliessendeVorhanden = false;
+            List<Eintrag> arbeitskopie = new List<Eintrag>();
+
+            // Einschließende Selektion über Zeichenkette
+            foreach (SelektionZeichenkette sele in selektion.Where(x => x is SelektionZeichenkette).Where(x => !x.IsAusschliessendeSelektion))
+            {
+                arbeitskopie.AddRange(Konto.Kontobewegung.Where(x => x.Kommentar.Contains(sele.GetWert())));
+                isEinschliessendeVorhanden = true;
+            }
+
+            // Einschließende Selektion über Größe
+            foreach (SelektionGroesse sele in selektion.Where(x => x is SelektionGroesse).Where(x => !x.IsAusschliessendeSelektion))
+            {
+                if (sele.IsKleiner)
+                    arbeitskopie.AddRange(Konto.Kontobewegung.Where(x => x.Wert < sele.GetWert()));
+                else
+                {
+                    arbeitskopie.AddRange(Konto.Kontobewegung.Where(x => x.Wert > sele.GetWert()));
+                }
+
+
+                isEinschliessendeVorhanden = true;
+            }
+
+            // Falls keine einschließende Selektion vorhanden, ist die Liste leer. In diesem Fall die unselektierte Liste nehmen und nur ausschließende Selektionen anwenden...
+            if (!isEinschliessendeVorhanden)
+                arbeitskopie.AddRange(Konto.Kontobewegung);
+
+            // Ggf. vorhandene Dopplungen durch einschließende Selektionen entfernen
+            arbeitskopie = arbeitskopie.Distinct().ToList();
+
+            // Ausschließende Selektion über Zeichenkette
+            foreach (SelektionZeichenkette sele in selektion.Where(x => x is SelektionZeichenkette).Where(x => x.IsAusschliessendeSelektion))
+            {
+                arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Kommentar.Contains(sele.GetWert()))).ToList();
+            }
+
+            // Ausschließende Selektion über Größe
+            foreach (SelektionGroesse sele in selektion.Where(x => x is SelektionGroesse).Where(x => x.IsAusschliessendeSelektion))
+            {
+                if (sele.IsKleiner)
+                    arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Wert < sele.GetWert())).ToList();
+                else
+                    arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Wert > sele.GetWert())).ToList();
+            }
+
+            Konto.Kontobewegung.Clear();
+            foreach (Eintrag eintrag in arbeitskopie)
+                Konto.Kontobewegung.Add(eintrag);
         }
         #endregion Methoden
     }

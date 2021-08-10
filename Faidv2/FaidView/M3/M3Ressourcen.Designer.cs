@@ -61,6 +61,15 @@ namespace Faidv2.FaidView.M3 {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Wert muss eine Zahl sein! ähnelt.
+        /// </summary>
+        internal static string FehlerWertNaN {
+            get {
+                return ResourceManager.GetString("FehlerWertNaN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Größer ähnelt.
         /// </summary>
         internal static string TypGroesser {
@@ -84,6 +93,24 @@ namespace Faidv2.FaidView.M3 {
         internal static string TypZeichenkette {
             get {
                 return ResourceManager.GetString("TypZeichenkette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es liegen Fehler vor. Die Selektion kann nicht übernommen werden! ähnelt.
+        /// </summary>
+        internal static string UebernahmeFehler {
+            get {
+                return ResourceManager.GetString("UebernahmeFehler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Übernahme Fehler ähnelt.
+        /// </summary>
+        internal static string UebernahmeFehlerUeberschrift {
+            get {
+                return ResourceManager.GetString("UebernahmeFehlerUeberschrift", resourceCulture);
             }
         }
     }

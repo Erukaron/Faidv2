@@ -48,12 +48,12 @@ namespace Faidv2.FaidModel.Selektion
         /// <summary>
         /// Gibt an, ob die Selektions einschließend oder ausschließend ist
         /// </summary>
-        public bool IsAusschliessendeSelektion { get => _isAusschliessendeSelektion; private set => _isAusschliessendeSelektion = value; }
+        public bool IsAusschliessendeSelektion { get => _isAusschliessendeSelektion; set => _isAusschliessendeSelektion = value; }
 
         /// <summary>
         /// Gibt den Typ der Selektion an
         /// </summary>
-        protected SelektionTyp Typ { get => _typ; private set => _typ = value; }
+        public virtual SelektionTyp Typ { get => _typ; protected set => _typ = value; }
 
         /// <summary>
         /// Beim Selektionstyp Zeichenkette, gibt dies den selektierten Wert (decimal) an

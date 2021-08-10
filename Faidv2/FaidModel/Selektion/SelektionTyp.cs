@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Faidv2.FaidView.M3;
 
 namespace Faidv2.FaidModel.Selektion
 {
@@ -14,5 +15,10 @@ namespace Faidv2.FaidModel.Selektion
         zeichenkette,
         groesser,
         kleiner
+    }
+
+    public class SelektionTypen
+    {
+        public static string[] Bezeichnung = { M3Ressourcen.TypZeichenkette, M3Ressourcen.TypGroesser, M3Ressourcen.TypKleiner };
     }
 }

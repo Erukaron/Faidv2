@@ -270,7 +270,13 @@ namespace Faidv2.FaidController
                 m3 = new Maske3();
             else
                 m3 = new Maske3(liste);
-            m3.Show(M1);
+            m3.ShowDialog(M1);
+
+            if (m3.IsDatenUbernommen)
+            {
+                liste.Clear();
+                liste.AddRange(m3.Liste);
+            }
         }
         #endregion Maske 3
 

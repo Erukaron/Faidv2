@@ -14,13 +14,17 @@ namespace Faidv2.FaidModel.Selektion
         /// </summary>
         /// <param name="ausschliessend"><paramref name="ausschliessend"/></param>
         /// <param name="wert">selektierter Wert</param>
-        public SelektionZeichenkette(bool ausschliessend, string wert) : base(ausschliessend, SelektionTyp.zeichenkette, wert)
+        public SelektionZeichenkette(bool ausschliessend = false, string wert = "") : base(ausschliessend, SelektionTyp.zeichenkette, wert)
         {
 
         }
         #endregion ctor
 
         #region Eigenschaften
+        /// <summary>
+        /// Gibt den Typ der Selektion an
+        /// </summary>
+        public override SelektionTyp Typ { get => SelektionTyp.zeichenkette; }
         #endregion Eigenschaften
 
         #region Methoden

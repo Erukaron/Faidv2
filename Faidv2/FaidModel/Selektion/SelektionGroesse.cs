@@ -15,7 +15,7 @@ namespace Faidv2.FaidModel.Selektion
         /// <param name="ausschliessend"><paramref name="ausschliessend"/></param>
         /// <param name="kleiner">Gibt an, ob die Selektion auf Objekte angewendet wird, die einen kleineren Wert haben als der wert-Parameter</param>
         /// <param name="wert">selektierter Wert</param>
-        public SelektionGroesse(bool ausschliessend, bool kleiner, decimal wert) : base(ausschliessend, kleiner ? SelektionTyp.kleiner : SelektionTyp.groesser, wert)
+        public SelektionGroesse(bool ausschliessend = false, bool kleiner = false, decimal wert = 0) : base(ausschliessend, kleiner ? SelektionTyp.kleiner : SelektionTyp.groesser, wert)
         {
 
         }
@@ -51,6 +51,19 @@ namespace Faidv2.FaidModel.Selektion
         public void SetWert(decimal wert)
         {
             base.Wert = wert;
+        }
+
+        /// <summary>
+        /// Legt den Typ der Selektion fest
+        /// </summary>
+        /// <param name="typ">Selektionstyp</param>
+        /// <throws><c>ArgumentException</c>, wenn der Selektionstyp nicht groesser oder kleiner ist</throws>
+        public void SetTyp(SelektionTyp typ)
+        {
+            if (typ == SelektionTyp.groesser || typ == SelektionTyp.kleiner)
+                base.Typ = typ;
+            else
+                throw new ArgumentException(string.Format("Der Selektionstyp muss groesser oder kleiner sein!"), "typ");
         }
         #endregion Methoden
     }

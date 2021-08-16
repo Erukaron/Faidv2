@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -54,7 +55,7 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Liste über Kontobewegungen
         /// </summary>
-        private BindingList<Eintrag> _kontobewegung;
+        private ObservableCollection<Eintrag> _kontobewegung;
 
         /// <summary>
         /// Liste über Zinsen
@@ -81,7 +82,7 @@ namespace Faidv2.FaidModel
             LetztesUpdate = DateTime.Now;
             Einkommen = new BindingList<DauerEintrag>();
             Ausgaben = new BindingList<DauerEintrag>();
-            Kontobewegung = new BindingList<Eintrag>();
+            Kontobewegung = new ObservableCollection<Eintrag>();
             Zinsen = new BindingList<DauerEintrag>();
             WeitereDaten = new Dictionary<string, object>();
         }
@@ -130,7 +131,7 @@ namespace Faidv2.FaidModel
         /// <summary>
         /// Liste über Kontobewegungen
         /// </summary>
-        public BindingList<Eintrag> Kontobewegung { get => _kontobewegung; private set => _kontobewegung = value; }
+        public ObservableCollection<Eintrag> Kontobewegung { get => _kontobewegung; private set => _kontobewegung = value; }
 
         /// <summary>
         /// Liste über Zinsen
@@ -220,7 +221,7 @@ namespace Faidv2.FaidModel
             model.KontostandAktualisiert = null; // Ansonsten würde bei Änderung des Kontostands die Maske des ursprünglichen Kontos aktualisiert werden
             model._einkommen = new BindingList<DauerEintrag>(_einkommen);
             model._ausgaben = new BindingList<DauerEintrag>(_ausgaben);
-            model._kontobewegung = new BindingList<Eintrag>(_kontobewegung);
+            model._kontobewegung = new ObservableCollection<Eintrag>(_kontobewegung);
             model._zinsen = new BindingList<DauerEintrag>(_zinsen);
             model._weitereDaten = new Dictionary<string, object>(_weitereDaten);
 

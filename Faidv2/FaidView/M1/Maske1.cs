@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Specialized;
 using Faidv2.FaidController;
 using Faidv2.FaidModel;
 using Microsoft.VisualBasic;
@@ -397,6 +398,30 @@ namespace Faidv2.FaidView.M1
                     dgvBewegung.Rows[e.RowIndex].DefaultCellStyle.BackColor = Properties.Settings.Default.GleichsetzenWechselZeilenHintergrund;
             }
         }
+
+        private void Kontobewegung_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    for (int i = 0; i < e.NewItems.Count; i++)
+                        Bewegungen.Insert(e.NewStartingIndex + i, (Eintrag)e.NewItems[i]);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (object eintrag in e.OldItems)
+                        Bewegungen.Remove(eintrag as Eintrag);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    throw new NotImplementedException(string.Format("Kontobewegung_CollectionChanged -> Action:Replace"));
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    Bewegungen.Clear();
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    throw new NotImplementedException(string.Format("Kontobewegung_CollectionChanged -> Action:Move"));
+                    break;
+            }
+        }
         #endregion Bewegung
 
         #region Einkommen
@@ -478,7 +503,7 @@ namespace Faidv2.FaidView.M1
         #endregion Tool Strip
         #endregion Sonstige Masken Events
 
-        #region Controller Kommunikation
+        #region Methoden
         /// <summary>
         /// Aktualisiert das Konto
         /// </summary>
@@ -487,9 +512,7 @@ namespace Faidv2.FaidView.M1
         {
             Konto = konto;
         }
-        #endregion Controller Kommunikation
 
-        #region Methoden
         /// <summary>
         /// Bindet die Datenbasis an die Maske
         /// </summary>
@@ -504,15 +527,20 @@ namespace Faidv2.FaidView.M1
             // Dies ist aber notwendig, damit das Objekt serialisiert werden kann. Ansonsten würde M1 mit serialisiert werden.
             Konto.KontostandAktualisiert += AktualisiereKontostand;
 
-            dgvBewegung.DataSource = konto.Kontobewegung;
+            // Datenbasis neu aufbauen
+            Bewegungen.Clear();
+            foreach (Eintrag e in konto.Kontobewegung)
+                Bewegungen.Add(e);
+
+            konto.Kontobewegung.CollectionChanged += Kontobewegung_CollectionChanged; // Änderungen sofort übernehmen
+
+            dgvBewegung.DataSource = Bewegungen;
             dgvBewegung.Columns[0].DataPropertyName = "Typ";
             dgvBewegung.Columns[1].DataPropertyName = "Erstellt";
             dgvBewegung.Columns[2].DataPropertyName = "Datum";
             dgvBewegung.Columns[3].DataPropertyName = "Wert";
             dgvBewegung.Columns[4].DataPropertyName = "Kommentar";
 
-            // ToDo: dgvBewegung Zeilen grau färben bei periodischer buchung
-            // ToDO: dgvEinnahmen/Ausgaben/Zinsen zusammen fassen -> Kennzeichen setzen
             dgvEinnahmen.DataSource = konto.Einkommen;
             dgvEinnahmen.Columns[0].DataPropertyName = "Erstellt";
             dgvEinnahmen.Columns[1].DataPropertyName = "Wert";
@@ -534,6 +562,7 @@ namespace Faidv2.FaidView.M1
         private void DatenbasisEntbinden(Model konto)
         {
             Konto.KontostandAktualisiert -= AktualisiereKontostand;
+            konto.Kontobewegung.CollectionChanged -= Kontobewegung_CollectionChanged;
 
             dgvBewegung.DataSource = null;
             dgvEinnahmen.DataSource = null;
@@ -613,7 +642,6 @@ namespace Faidv2.FaidView.M1
         /// <param name="selektion">Anzuwendene Selektionsauflistung</param>
         private void SelektionAnwenden(List<SelektionBase> selektion)
         {
-            // ToDo : Konto.Kontobewegungen in Bewegungen ändern -> Entsprechend dgv anpassen
             bool isEinschliessendeVorhanden = false;
             List<Eintrag> arbeitskopie = new List<Eintrag>();
 
@@ -630,9 +658,7 @@ namespace Faidv2.FaidView.M1
                 if (sele.IsKleiner)
                     arbeitskopie.AddRange(Konto.Kontobewegung.Where(x => x.Wert < sele.GetWert()));
                 else
-                {
                     arbeitskopie.AddRange(Konto.Kontobewegung.Where(x => x.Wert > sele.GetWert()));
-                }
 
 
                 isEinschliessendeVorhanden = true;
@@ -660,9 +686,9 @@ namespace Faidv2.FaidView.M1
                     arbeitskopie = arbeitskopie.Except(arbeitskopie.Where(x => x.Wert > sele.GetWert())).ToList();
             }
 
-            Konto.Kontobewegung.Clear();
+            Bewegungen.Clear();
             foreach (Eintrag eintrag in arbeitskopie)
-                Konto.Kontobewegung.Add(eintrag);
+                Bewegungen.Add(eintrag);
         }
         #endregion Methoden
     }

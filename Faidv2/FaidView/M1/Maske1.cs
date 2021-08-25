@@ -156,6 +156,7 @@ namespace Faidv2.FaidView.M1
                     toolStripStatusLabelWert.Text = Konto.Kontostand.ToString();
 
                     DatenbasisBinden(Konto);
+                    AktualisierePlanungTab();
                 }
             }
         }
@@ -313,6 +314,8 @@ namespace Faidv2.FaidView.M1
                             Ctrl.ZinsenEntfernen(Konto, eintrag);
                     }
                 }
+
+                AktualisierePlanungTab();
             }   
         }
 
@@ -576,6 +579,8 @@ namespace Faidv2.FaidView.M1
         private void AktualisiereKontostand()
         {
             toolStripStatusLabelWert.Text = Konto.Kontostand.ToString();
+
+            AktualisierePlanungTab();
         }
 
         /// <summary>
@@ -689,6 +694,40 @@ namespace Faidv2.FaidView.M1
             Bewegungen.Clear();
             foreach (Eintrag eintrag in arbeitskopie)
                 Bewegungen.Add(eintrag);
+        }
+
+        /// <summary>
+        /// Veranlasst die Aktualisierung der Planungsdaten
+        /// </summary>
+        public void AktualisierePlanungTab()
+        {
+            Model berechnungsDatei;
+
+            berechnungsDatei = Konto.DeepCopy();
+            Ctrl.PeriodischeVerbuchungenAusfuehren(berechnungsDatei, DateTime.Now.AddMonths(1));
+            textBoxDispoFix.Text = berechnungsDatei.Kontostand.ToString();
+
+            berechnungsDatei = Konto.DeepCopy();
+            Ctrl.PeriodischeVerbuchungenAusfuehren(berechnungsDatei, dateDispo.Value);
+            textBoxDispoWahl.Text = berechnungsDatei.Kontostand.ToString();
+
+            // ToDo: 
+            //dateZiel.Value = ;
+
+            decimal einkommen = 0; 
+            decimal ausgaben = 0;
+            decimal zinswert = 0;
+            foreach (DauerEintrag e in Konto.Einkommen)
+                einkommen += e.Wert;
+            foreach (DauerEintrag a in Konto.Ausgaben)
+                ausgaben += a.Wert;
+            foreach (DauerEintrag z in Konto.Zinsen)
+                zinswert += Konto.Kontostand * z.Wert / 100;
+
+            textBoxSaldoEinkommen.Text = einkommen.ToString();
+            textBoxSaldoAusgaben.Text = ausgaben.ToString();
+            textBoxDiff.Text = (einkommen - ausgaben).ToString();
+            textBoxZinswert.Text = zinswert.ToString();
         }
         #endregion Methoden
     }

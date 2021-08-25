@@ -102,6 +102,14 @@ namespace Faidv2.FaidController
 
             Application.Run(M1);
         }
+
+        /// <summary>
+        /// Veranlasst die Aktualisierung der Planungsdaten auf Maske 1
+        /// </summary>
+        private void AktualisierenM1Planung()
+        {
+            M1.Invoke((MethodInvoker)delegate { M1.AktualisierePlanungTab(); });
+        }
         #endregion Maske 1
 
         #region Maske 2 (Erfassung/Korrektur)
@@ -173,6 +181,8 @@ namespace Faidv2.FaidController
                     konto.Zinsen.Add(new DauerEintrag(dauerbuchung, wert, kommentar));
                     break;
             }
+
+            AktualisierenM1Planung();
         }
 
         /// <summary>
@@ -247,6 +257,8 @@ namespace Faidv2.FaidController
                 M1.DGVAusgabenAktualisieren();
                 M1.DGVZinsenAktualisieren();
             }
+
+            AktualisierenM1Planung();
         }
         #endregion Maske 2
 
@@ -372,7 +384,7 @@ namespace Faidv2.FaidController
         }
         #endregion Anlage, Speichern, Laden
 
-        #region Periodische Verbuchung
+        #region Std. Verbuchung
         /// <summary>
         /// Verbucht alle noch ausstehenden periodischen Buchungen
         /// </summary>
@@ -417,9 +429,9 @@ namespace Faidv2.FaidController
             */
 
             DateTime aktuell = letzte;
-            while (letzte < bisDatum)
+            while (letzte <= bisDatum)
             {
-                aktuell.AddDays(1);
+                aktuell = aktuell.AddDays(1);
 
                 /*
                 List<DauerEintrag> tEinkommen = wochentagEinkommen.Where(eintrag => (int)eintrag.Typ == (int)letzte.DayOfWeek)?.ToList();
@@ -442,7 +454,7 @@ namespace Faidv2.FaidController
                     if (monatlicheEinkommen.Count > 0)
                         VerbuchePeriodisch(konto, monatlicheEinkommen, BuchungsTyp.Addition, letzte);
                     if (monatlicheAusgaben.Count > 0)
-                        VerbuchePeriodisch(konto, monatlicheAusgaben, BuchungsTyp.Addition, letzte);
+                        VerbuchePeriodisch(konto, monatlicheAusgaben, BuchungsTyp.Subtraktion, letzte);
                     if (monatlicheZinsen.Count > 0)
                         VerbuchePeriodischZinsen(konto, monatlicheZinsen, letzte);
                 }
@@ -479,7 +491,7 @@ namespace Faidv2.FaidController
         private void VerbuchePeriodischZinsen(Model konto, List<DauerEintrag> eintraege, DateTime datum)
         {
             foreach (DauerEintrag eintrag in eintraege)
-                konto.Verbuchen(new Eintrag(eintrag.Wert < 0 ? BuchungsTyp.Subtraktion : BuchungsTyp.Addition, datum, konto.Kontostand * eintrag.Wert, eintrag.Kommentar, true));
+                konto.Verbuchen(new Eintrag(eintrag.Wert < 0 ? BuchungsTyp.Subtraktion : BuchungsTyp.Addition, datum, konto.Kontostand * eintrag.Wert / 100, eintrag.Kommentar, true));
         }
         #endregion Std. Verbuchung
 
@@ -496,7 +508,7 @@ namespace Faidv2.FaidController
         }
 
         /// <summary>
-        /// Entfer´nt den Datensatz aus der Liste des Kontos
+        /// Entfernt den Datensatz aus der Liste des Kontos
         /// </summary>
         /// <param name="konto">Kontodatei</param>
         /// <param name="eintrag">Zu entfernender Eintrag</param>
@@ -841,6 +853,8 @@ namespace Faidv2.FaidController
                             konto.Kontobewegung.Add(new Eintrag(buchungsTyp, datum, wert, kommentar, isPeriodisch));
                         }
                     }
+
+                    konto.LetztePeriodischeAusfuehrung = DateTime.Now.Date;
                 }
                 catch (Exception e)
                 {

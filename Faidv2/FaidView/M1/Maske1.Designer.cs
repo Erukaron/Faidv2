@@ -86,6 +86,32 @@ namespace Faidv2.FaidView.M1
             this.openFileDialogKonvertierung = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.groupBoxMonatsnormierung = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxDiff = new CustomControls.DecimalTextBox();
+            this.labelDiff = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxSaldoAusgaben = new CustomControls.DecimalTextBox();
+            this.labelAusgaben = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxSaldoEinkommen = new CustomControls.DecimalTextBox();
+            this.labelEinkommen = new System.Windows.Forms.Label();
+            this.groupBoxAndere = new System.Windows.Forms.GroupBox();
+            this.labelZiel2 = new System.Windows.Forms.Label();
+            this.dateZiel = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelZiel = new System.Windows.Forms.Label();
+            this.textBoxZiel = new CustomControls.DecimalTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dateDispo = new System.Windows.Forms.DateTimePicker();
+            this.textBoxDispoWahl = new CustomControls.DecimalTextBox();
+            this.labelDispo2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxDispoFix = new CustomControls.DecimalTextBox();
+            this.labelDispo = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxZinswert = new CustomControls.DecimalTextBox();
+            this.labelZinswert = new System.Windows.Forms.Label();
             this.Hauptmenu.SuspendLayout();
             this.Contextmenu.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -103,7 +129,10 @@ namespace Faidv2.FaidView.M1
             this.splitContainerAusgabenZinsen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAusgaben)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZinsen)).BeginInit();
+            this.tabPlanung.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.groupBoxMonatsnormierung.SuspendLayout();
+            this.groupBoxAndere.SuspendLayout();
             this.SuspendLayout();
             // 
             // Hauptmenu
@@ -537,6 +566,8 @@ namespace Faidv2.FaidView.M1
             // 
             // tabPlanung
             // 
+            this.tabPlanung.Controls.Add(this.groupBoxAndere);
+            this.tabPlanung.Controls.Add(this.groupBoxMonatsnormierung);
             this.tabPlanung.Location = new System.Drawing.Point(4, 22);
             this.tabPlanung.Name = "tabPlanung";
             this.tabPlanung.Padding = new System.Windows.Forms.Padding(3);
@@ -609,6 +640,259 @@ namespace Faidv2.FaidView.M1
             this.saveFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
             this.saveFileDialog.Title = "Faid v2 Datei speichern";
             // 
+            // groupBoxMonatsnormierung
+            // 
+            this.groupBoxMonatsnormierung.Controls.Add(this.label7);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxZinswert);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelZinswert);
+            this.groupBoxMonatsnormierung.Controls.Add(this.label6);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxDiff);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelDiff);
+            this.groupBoxMonatsnormierung.Controls.Add(this.label4);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxSaldoAusgaben);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelAusgaben);
+            this.groupBoxMonatsnormierung.Controls.Add(this.label5);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxSaldoEinkommen);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelEinkommen);
+            this.groupBoxMonatsnormierung.Location = new System.Drawing.Point(8, 105);
+            this.groupBoxMonatsnormierung.Name = "groupBoxMonatsnormierung";
+            this.groupBoxMonatsnormierung.Size = new System.Drawing.Size(407, 119);
+            this.groupBoxMonatsnormierung.TabIndex = 26;
+            this.groupBoxMonatsnormierung.TabStop = false;
+            this.groupBoxMonatsnormierung.Text = "Monatsnormierung";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(384, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 13);
+            this.label6.TabIndex = 34;
+            this.label6.Text = "€";
+            // 
+            // textBoxDiff
+            // 
+            this.textBoxDiff.Enabled = false;
+            this.textBoxDiff.Location = new System.Drawing.Point(178, 65);
+            this.textBoxDiff.Name = "textBoxDiff";
+            this.textBoxDiff.Size = new System.Drawing.Size(200, 20);
+            this.textBoxDiff.TabIndex = 33;
+            this.textBoxDiff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelDiff
+            // 
+            this.labelDiff.AutoSize = true;
+            this.labelDiff.Location = new System.Drawing.Point(6, 68);
+            this.labelDiff.Name = "labelDiff";
+            this.labelDiff.Size = new System.Drawing.Size(160, 13);
+            this.labelDiff.TabIndex = 32;
+            this.labelDiff.Text = "Differenz Einkommen/Ausgaben";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(384, 42);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(13, 13);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "€";
+            // 
+            // textBoxSaldoAusgaben
+            // 
+            this.textBoxSaldoAusgaben.Enabled = false;
+            this.textBoxSaldoAusgaben.Location = new System.Drawing.Point(178, 39);
+            this.textBoxSaldoAusgaben.Name = "textBoxSaldoAusgaben";
+            this.textBoxSaldoAusgaben.Size = new System.Drawing.Size(200, 20);
+            this.textBoxSaldoAusgaben.TabIndex = 30;
+            this.textBoxSaldoAusgaben.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelAusgaben
+            // 
+            this.labelAusgaben.AutoSize = true;
+            this.labelAusgaben.Location = new System.Drawing.Point(6, 42);
+            this.labelAusgaben.Name = "labelAusgaben";
+            this.labelAusgaben.Size = new System.Drawing.Size(85, 13);
+            this.labelAusgaben.TabIndex = 29;
+            this.labelAusgaben.Text = "Saldo Ausgaben";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(384, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(13, 13);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "€";
+            // 
+            // textBoxSaldoEinkommen
+            // 
+            this.textBoxSaldoEinkommen.Enabled = false;
+            this.textBoxSaldoEinkommen.Location = new System.Drawing.Point(178, 13);
+            this.textBoxSaldoEinkommen.Name = "textBoxSaldoEinkommen";
+            this.textBoxSaldoEinkommen.Size = new System.Drawing.Size(200, 20);
+            this.textBoxSaldoEinkommen.TabIndex = 27;
+            this.textBoxSaldoEinkommen.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelEinkommen
+            // 
+            this.labelEinkommen.AutoSize = true;
+            this.labelEinkommen.Location = new System.Drawing.Point(6, 16);
+            this.labelEinkommen.Name = "labelEinkommen";
+            this.labelEinkommen.Size = new System.Drawing.Size(92, 13);
+            this.labelEinkommen.TabIndex = 26;
+            this.labelEinkommen.Text = "Saldo Einkommen";
+            // 
+            // groupBoxAndere
+            // 
+            this.groupBoxAndere.Controls.Add(this.labelZiel2);
+            this.groupBoxAndere.Controls.Add(this.dateZiel);
+            this.groupBoxAndere.Controls.Add(this.label3);
+            this.groupBoxAndere.Controls.Add(this.labelZiel);
+            this.groupBoxAndere.Controls.Add(this.textBoxZiel);
+            this.groupBoxAndere.Controls.Add(this.label2);
+            this.groupBoxAndere.Controls.Add(this.dateDispo);
+            this.groupBoxAndere.Controls.Add(this.textBoxDispoWahl);
+            this.groupBoxAndere.Controls.Add(this.labelDispo2);
+            this.groupBoxAndere.Controls.Add(this.label1);
+            this.groupBoxAndere.Controls.Add(this.textBoxDispoFix);
+            this.groupBoxAndere.Controls.Add(this.labelDispo);
+            this.groupBoxAndere.Location = new System.Drawing.Point(8, 6);
+            this.groupBoxAndere.Name = "groupBoxAndere";
+            this.groupBoxAndere.Size = new System.Drawing.Size(687, 93);
+            this.groupBoxAndere.TabIndex = 27;
+            this.groupBoxAndere.TabStop = false;
+            // 
+            // labelZiel2
+            // 
+            this.labelZiel2.AutoSize = true;
+            this.labelZiel2.Location = new System.Drawing.Point(413, 69);
+            this.labelZiel2.Name = "labelZiel2";
+            this.labelZiel2.Size = new System.Drawing.Size(42, 13);
+            this.labelZiel2.TabIndex = 28;
+            this.labelZiel2.Text = "erreicht";
+            // 
+            // dateZiel
+            // 
+            this.dateZiel.Enabled = false;
+            this.dateZiel.Location = new System.Drawing.Point(463, 62);
+            this.dateZiel.Name = "dateZiel";
+            this.dateZiel.Size = new System.Drawing.Size(200, 20);
+            this.dateZiel.TabIndex = 27;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(384, 68);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "€";
+            // 
+            // labelZiel
+            // 
+            this.labelZiel.AutoSize = true;
+            this.labelZiel.Location = new System.Drawing.Point(6, 68);
+            this.labelZiel.Name = "labelZiel";
+            this.labelZiel.Size = new System.Drawing.Size(24, 13);
+            this.labelZiel.TabIndex = 25;
+            this.labelZiel.Text = "Ziel";
+            // 
+            // textBoxZiel
+            // 
+            this.textBoxZiel.Location = new System.Drawing.Point(178, 65);
+            this.textBoxZiel.Name = "textBoxZiel";
+            this.textBoxZiel.Size = new System.Drawing.Size(200, 20);
+            this.textBoxZiel.TabIndex = 24;
+            this.textBoxZiel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(669, 39);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "€";
+            // 
+            // dateDispo
+            // 
+            this.dateDispo.Location = new System.Drawing.Point(178, 39);
+            this.dateDispo.Name = "dateDispo";
+            this.dateDispo.Size = new System.Drawing.Size(200, 20);
+            this.dateDispo.TabIndex = 22;
+            // 
+            // textBoxDispoWahl
+            // 
+            this.textBoxDispoWahl.Enabled = false;
+            this.textBoxDispoWahl.Location = new System.Drawing.Point(463, 36);
+            this.textBoxDispoWahl.Name = "textBoxDispoWahl";
+            this.textBoxDispoWahl.Size = new System.Drawing.Size(200, 20);
+            this.textBoxDispoWahl.TabIndex = 21;
+            this.textBoxDispoWahl.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelDispo2
+            // 
+            this.labelDispo2.AutoSize = true;
+            this.labelDispo2.Location = new System.Drawing.Point(6, 42);
+            this.labelDispo2.Name = "labelDispo2";
+            this.labelDispo2.Size = new System.Drawing.Size(133, 13);
+            this.labelDispo2.TabIndex = 20;
+            this.labelDispo2.Text = "Dispositiver Kontostand für";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(384, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "€";
+            // 
+            // textBoxDispoFix
+            // 
+            this.textBoxDispoFix.Enabled = false;
+            this.textBoxDispoFix.Location = new System.Drawing.Point(178, 13);
+            this.textBoxDispoFix.Name = "textBoxDispoFix";
+            this.textBoxDispoFix.Size = new System.Drawing.Size(200, 20);
+            this.textBoxDispoFix.TabIndex = 18;
+            this.textBoxDispoFix.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelDispo
+            // 
+            this.labelDispo.AutoSize = true;
+            this.labelDispo.Location = new System.Drawing.Point(6, 16);
+            this.labelDispo.Name = "labelDispo";
+            this.labelDispo.Size = new System.Drawing.Size(166, 13);
+            this.labelDispo.TabIndex = 17;
+            this.labelDispo.Text = "Dispositiver Kontostand (1 Monat)";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(384, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.TabIndex = 37;
+            this.label7.Text = "€";
+            // 
+            // textBoxZinswert
+            // 
+            this.textBoxZinswert.Enabled = false;
+            this.textBoxZinswert.Location = new System.Drawing.Point(178, 91);
+            this.textBoxZinswert.Name = "textBoxZinswert";
+            this.textBoxZinswert.Size = new System.Drawing.Size(200, 20);
+            this.textBoxZinswert.TabIndex = 36;
+            this.textBoxZinswert.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelZinswert
+            // 
+            this.labelZinswert.AutoSize = true;
+            this.labelZinswert.Location = new System.Drawing.Point(6, 94);
+            this.labelZinswert.Name = "labelZinswert";
+            this.labelZinswert.Size = new System.Drawing.Size(47, 13);
+            this.labelZinswert.TabIndex = 35;
+            this.labelZinswert.Text = "Zinswert";
+            // 
             // Maske1
             // 
             this.AllowDrop = true;
@@ -620,6 +904,7 @@ namespace Faidv2.FaidView.M1
             this.Controls.Add(this.Hauptmenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Hauptmenu;
+            this.MinimumSize = new System.Drawing.Size(730, 340);
             this.Name = "Maske1";
             this.Text = "Faid v2";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Maske1_DragDrop);
@@ -642,8 +927,13 @@ namespace Faidv2.FaidView.M1
             this.splitContainerAusgabenZinsen.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAusgaben)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZinsen)).EndInit();
+            this.tabPlanung.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.groupBoxMonatsnormierung.ResumeLayout(false);
+            this.groupBoxMonatsnormierung.PerformLayout();
+            this.groupBoxAndere.ResumeLayout(false);
+            this.groupBoxAndere.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -706,5 +996,31 @@ namespace Faidv2.FaidView.M1
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDateierweiterung;
         private System.Windows.Forms.ToolStripMenuItem selektionToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.GroupBox groupBoxAndere;
+        private System.Windows.Forms.Label labelZiel2;
+        private System.Windows.Forms.DateTimePicker dateZiel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelZiel;
+        private CustomControls.DecimalTextBox textBoxZiel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker dateDispo;
+        private CustomControls.DecimalTextBox textBoxDispoWahl;
+        private System.Windows.Forms.Label labelDispo2;
+        private System.Windows.Forms.Label label1;
+        private CustomControls.DecimalTextBox textBoxDispoFix;
+        private System.Windows.Forms.Label labelDispo;
+        private System.Windows.Forms.GroupBox groupBoxMonatsnormierung;
+        private System.Windows.Forms.Label label6;
+        private CustomControls.DecimalTextBox textBoxDiff;
+        private System.Windows.Forms.Label labelDiff;
+        private System.Windows.Forms.Label label4;
+        private CustomControls.DecimalTextBox textBoxSaldoAusgaben;
+        private System.Windows.Forms.Label labelAusgaben;
+        private System.Windows.Forms.Label label5;
+        private CustomControls.DecimalTextBox textBoxSaldoEinkommen;
+        private System.Windows.Forms.Label labelEinkommen;
+        private System.Windows.Forms.Label label7;
+        private CustomControls.DecimalTextBox textBoxZinswert;
+        private System.Windows.Forms.Label labelZinswert;
     }
 }

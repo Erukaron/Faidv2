@@ -38,9 +38,6 @@ namespace Faidv2.FaidModel
         /// <throws><c>DateFutureException</c>, wenn das angegebene Datum in der Zukunft liegt</throws>
         public Eintrag(BuchungsTyp typ, DateTime datum, decimal wert, string kommentar, bool periodischeVerbuchung) : base(wert, kommentar)
         {
-            if (datum > DateTime.Now)
-                throw new DateFutureException(String.Format("Das angegebene Datum {0} liegt in der Zukunft!", datum));
-
             Typ = typ;
             Datum = datum;
             PeriodischeVerbuchung = periodischeVerbuchung;

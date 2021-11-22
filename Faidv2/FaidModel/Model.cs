@@ -80,6 +80,7 @@ namespace Faidv2.FaidModel
             Kontoname = kontoname;
             Kontostand = 0;
             LetztesUpdate = DateTime.Now;
+            LetztePeriodischeAusfuehrung = DateTime.Now;
             Einkommen = new BindingList<DauerEintrag>();
             Ausgaben = new BindingList<DauerEintrag>();
             Kontobewegung = new ObservableCollection<Eintrag>();

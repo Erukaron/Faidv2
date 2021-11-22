@@ -404,15 +404,14 @@ namespace Faidv2.FaidController
             // Alle anstehenden Verbuchungen seit dem letzten periodischen Ausführen ausführen
             DateTime letzte = konto.LetztePeriodischeAusfuehrung;
 
-            /*
-            List<DauerEintrag> wochentagEinkommen = konto.Einkommen.Where(eintrag => eintrag.Typ >= DauerBuchungsTyp.Montags && eintrag.Typ <= DauerBuchungsTyp.Sonntags)?.ToList();
-            List<DauerEintrag> wochentagAusgaben = konto.Ausgaben.Where(eintrag => eintrag.Typ >= DauerBuchungsTyp.Montags && eintrag.Typ <= DauerBuchungsTyp.Sonntags)?.ToList();
-            List<DauerEintrag> wochentagZinsen = konto.Zinsen.Where(eintrag => eintrag.Typ >= DauerBuchungsTyp.Montags && eintrag.Typ <= DauerBuchungsTyp.Sonntags)?.ToList();
+            
+            List<DauerEintrag> wochentagEinkommen = konto.Einkommen.Where(eintrag => eintrag.Typ >= DauerBuchungsTyp.Sonntags && eintrag.Typ <= DauerBuchungsTyp.Samstags)?.ToList();
+            List<DauerEintrag> wochentagAusgaben = konto.Ausgaben.Where(eintrag => eintrag.Typ >= DauerBuchungsTyp.Sonntags && eintrag.Typ <= DauerBuchungsTyp.Samstags)?.ToList();
+            List<DauerEintrag> wochentagZinsen = konto.Zinsen.Where(eintrag => eintrag.Typ >= DauerBuchungsTyp.Sonntags && eintrag.Typ <= DauerBuchungsTyp.Samstags)?.ToList();
 
             List<DauerEintrag> woechentlicheEinkommen = konto.Einkommen.Where(eintrag => eintrag.Typ == DauerBuchungsTyp.Woechentlich)?.ToList();
             List<DauerEintrag> woechentlicheAusgaben = konto.Ausgaben.Where(eintrag => eintrag.Typ == DauerBuchungsTyp.Woechentlich)?.ToList();
             List<DauerEintrag> woechentlicheZinsen = konto.Zinsen.Where(eintrag => eintrag.Typ == DauerBuchungsTyp.Woechentlich)?.ToList();
-            */
 
             List<DauerEintrag> monatlicheEinkommen = konto.Einkommen.Where(eintrag => eintrag.Typ == DauerBuchungsTyp.Monatlich)?.ToList();
             List<DauerEintrag> monatlicheAusgaben = konto.Ausgaben.Where(eintrag => eintrag.Typ == DauerBuchungsTyp.Monatlich)?.ToList();
@@ -433,18 +432,17 @@ namespace Faidv2.FaidController
             {
                 aktuell = aktuell.AddDays(1);
 
-                /*
+                
                 List<DauerEintrag> tEinkommen = wochentagEinkommen.Where(eintrag => (int)eintrag.Typ == (int)letzte.DayOfWeek)?.ToList();
                 List<DauerEintrag> tAusgaben = wochentagAusgaben.Where(eintrag => (int)eintrag.Typ == (int)letzte.DayOfWeek)?.ToList();
                 List<DauerEintrag> tZinsen = wochentagZinsen.Where(eintrag => (int)eintrag.Typ == (int)letzte.DayOfWeek)?.ToList();
-                // Prüfe ob tägliche Verbuchungen vorhanden
                 if (tEinkommen.Count > 0)
                     VerbuchePeriodisch(konto, tEinkommen, BuchungsTyp.Addition, letzte);
                 if (tAusgaben.Count > 0)
                     VerbuchePeriodisch(konto, tAusgaben, BuchungsTyp.Subtraktion, letzte);
                 if (tEinkommen.Count > 0)
                     VerbuchePeriodischZinsen(konto, tZinsen, letzte);
-                */
+                
 
                 // Prüfe ob wöchentliche Verbuchungen vorhanden
 

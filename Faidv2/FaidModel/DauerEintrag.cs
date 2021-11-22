@@ -30,9 +30,6 @@ namespace Faidv2.FaidModel
         /// <param name="kommentar">Kommentar zu jeder Verbuchung</param>
         public DauerEintrag(DauerBuchungsTyp typ, decimal wert, string kommentar) : base(wert, kommentar)
         {
-            if (typ != DauerBuchungsTyp.Monatlich)
-                throw new ArgumentException(String.Format("Aktuell ist nur der monatliche Typ zugelassen!"), "typ");
-
             _typ = typ;
 
             if (_typ == DauerBuchungsTyp.Benutzerdefiniert)

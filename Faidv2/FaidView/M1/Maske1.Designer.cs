@@ -77,25 +77,6 @@ namespace Faidv2.FaidView.M1
             this.dgvZinsenWert = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvZinsenKommentar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPlanung = new System.Windows.Forms.TabPage();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelDatei = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelSpring = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelKontostand = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelWert = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelEuro = new System.Windows.Forms.ToolStripStatusLabel();
-            this.openFileDialogKonvertierung = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.groupBoxMonatsnormierung = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBoxDiff = new CustomControls.DecimalTextBox();
-            this.labelDiff = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBoxSaldoAusgaben = new CustomControls.DecimalTextBox();
-            this.labelAusgaben = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBoxSaldoEinkommen = new CustomControls.DecimalTextBox();
-            this.labelEinkommen = new System.Windows.Forms.Label();
             this.groupBoxAndere = new System.Windows.Forms.GroupBox();
             this.labelZiel2 = new System.Windows.Forms.Label();
             this.dateZiel = new System.Windows.Forms.DateTimePicker();
@@ -109,9 +90,29 @@ namespace Faidv2.FaidView.M1
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxDispoFix = new CustomControls.DecimalTextBox();
             this.labelDispo = new System.Windows.Forms.Label();
+            this.groupBoxMonatsnormierung = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBoxZinswert = new CustomControls.DecimalTextBox();
             this.labelZinswert = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxDiff = new CustomControls.DecimalTextBox();
+            this.labelDiff = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxSaldoAusgaben = new CustomControls.DecimalTextBox();
+            this.labelAusgaben = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxSaldoEinkommen = new CustomControls.DecimalTextBox();
+            this.labelEinkommen = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelDatei = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelSpring = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelKontostand = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelWert = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelEuro = new System.Windows.Forms.ToolStripStatusLabel();
+            this.openFileDialogKonvertierung = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Hauptmenu.SuspendLayout();
             this.Contextmenu.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -130,9 +131,9 @@ namespace Faidv2.FaidView.M1
             ((System.ComponentModel.ISupportInitialize)(this.dgvAusgaben)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZinsen)).BeginInit();
             this.tabPlanung.SuspendLayout();
-            this.statusStrip.SuspendLayout();
-            this.groupBoxMonatsnormierung.SuspendLayout();
             this.groupBoxAndere.SuspendLayout();
+            this.groupBoxMonatsnormierung.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // Hauptmenu
@@ -286,7 +287,8 @@ namespace Faidv2.FaidView.M1
             // einstellungenToolStripMenuItem
             // 
             this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemDateierweiterung});
+            this.toolStripMenuItemDateierweiterung,
+            this.testToolStripMenuItem1});
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
             this.einstellungenToolStripMenuItem.Text = "Einstellungen";
@@ -576,172 +578,6 @@ namespace Faidv2.FaidView.M1
             this.tabPlanung.Text = "Planung";
             this.tabPlanung.UseVisualStyleBackColor = true;
             // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelDatei,
-            this.toolStripStatusLabelSpring,
-            this.toolStripStatusLabelKontostand,
-            this.toolStripStatusLabelWert,
-            this.toolStripStatusLabelEuro});
-            this.statusStrip.Location = new System.Drawing.Point(0, 451);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(800, 22);
-            this.statusStrip.TabIndex = 3;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabelDatei
-            // 
-            this.toolStripStatusLabelDatei.Name = "toolStripStatusLabelDatei";
-            this.toolStripStatusLabelDatei.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatusLabelDatei.Text = "Status";
-            // 
-            // toolStripStatusLabelSpring
-            // 
-            this.toolStripStatusLabelSpring.Name = "toolStripStatusLabelSpring";
-            this.toolStripStatusLabelSpring.Size = new System.Drawing.Size(649, 17);
-            this.toolStripStatusLabelSpring.Spring = true;
-            this.toolStripStatusLabelSpring.Text = " ";
-            // 
-            // toolStripStatusLabelKontostand
-            // 
-            this.toolStripStatusLabelKontostand.Name = "toolStripStatusLabelKontostand";
-            this.toolStripStatusLabelKontostand.Size = new System.Drawing.Size(71, 17);
-            this.toolStripStatusLabelKontostand.Text = "Kontostand:";
-            // 
-            // toolStripStatusLabelWert
-            // 
-            this.toolStripStatusLabelWert.Name = "toolStripStatusLabelWert";
-            this.toolStripStatusLabelWert.Size = new System.Drawing.Size(13, 17);
-            this.toolStripStatusLabelWert.Text = "0";
-            this.toolStripStatusLabelWert.TextChanged += new System.EventHandler(this.toolStripStatusLabelWert_TextChanged);
-            // 
-            // toolStripStatusLabelEuro
-            // 
-            this.toolStripStatusLabelEuro.Name = "toolStripStatusLabelEuro";
-            this.toolStripStatusLabelEuro.Size = new System.Drawing.Size(13, 17);
-            this.toolStripStatusLabelEuro.Text = "€";
-            // 
-            // openFileDialogKonvertierung
-            // 
-            this.openFileDialogKonvertierung.DefaultExt = "fa";
-            this.openFileDialogKonvertierung.Filter = "Faid v1.4 Dateien|*.fa|Alle Dateien|*.*";
-            this.openFileDialogKonvertierung.Title = "Datei zur Kovertierung auswählen";
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.DefaultExt = "fa2";
-            this.openFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
-            this.openFileDialog.Title = "Faid v2 Kontodatei öffnen";
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.DefaultExt = "fa2";
-            this.saveFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
-            this.saveFileDialog.Title = "Faid v2 Datei speichern";
-            // 
-            // groupBoxMonatsnormierung
-            // 
-            this.groupBoxMonatsnormierung.Controls.Add(this.label7);
-            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxZinswert);
-            this.groupBoxMonatsnormierung.Controls.Add(this.labelZinswert);
-            this.groupBoxMonatsnormierung.Controls.Add(this.label6);
-            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxDiff);
-            this.groupBoxMonatsnormierung.Controls.Add(this.labelDiff);
-            this.groupBoxMonatsnormierung.Controls.Add(this.label4);
-            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxSaldoAusgaben);
-            this.groupBoxMonatsnormierung.Controls.Add(this.labelAusgaben);
-            this.groupBoxMonatsnormierung.Controls.Add(this.label5);
-            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxSaldoEinkommen);
-            this.groupBoxMonatsnormierung.Controls.Add(this.labelEinkommen);
-            this.groupBoxMonatsnormierung.Location = new System.Drawing.Point(8, 105);
-            this.groupBoxMonatsnormierung.Name = "groupBoxMonatsnormierung";
-            this.groupBoxMonatsnormierung.Size = new System.Drawing.Size(407, 119);
-            this.groupBoxMonatsnormierung.TabIndex = 26;
-            this.groupBoxMonatsnormierung.TabStop = false;
-            this.groupBoxMonatsnormierung.Text = "Monatsnormierung";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(384, 68);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(13, 13);
-            this.label6.TabIndex = 34;
-            this.label6.Text = "€";
-            // 
-            // textBoxDiff
-            // 
-            this.textBoxDiff.Enabled = false;
-            this.textBoxDiff.Location = new System.Drawing.Point(178, 65);
-            this.textBoxDiff.Name = "textBoxDiff";
-            this.textBoxDiff.Size = new System.Drawing.Size(200, 20);
-            this.textBoxDiff.TabIndex = 33;
-            this.textBoxDiff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // labelDiff
-            // 
-            this.labelDiff.AutoSize = true;
-            this.labelDiff.Location = new System.Drawing.Point(6, 68);
-            this.labelDiff.Name = "labelDiff";
-            this.labelDiff.Size = new System.Drawing.Size(160, 13);
-            this.labelDiff.TabIndex = 32;
-            this.labelDiff.Text = "Differenz Einkommen/Ausgaben";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(384, 42);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(13, 13);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "€";
-            // 
-            // textBoxSaldoAusgaben
-            // 
-            this.textBoxSaldoAusgaben.Enabled = false;
-            this.textBoxSaldoAusgaben.Location = new System.Drawing.Point(178, 39);
-            this.textBoxSaldoAusgaben.Name = "textBoxSaldoAusgaben";
-            this.textBoxSaldoAusgaben.Size = new System.Drawing.Size(200, 20);
-            this.textBoxSaldoAusgaben.TabIndex = 30;
-            this.textBoxSaldoAusgaben.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // labelAusgaben
-            // 
-            this.labelAusgaben.AutoSize = true;
-            this.labelAusgaben.Location = new System.Drawing.Point(6, 42);
-            this.labelAusgaben.Name = "labelAusgaben";
-            this.labelAusgaben.Size = new System.Drawing.Size(85, 13);
-            this.labelAusgaben.TabIndex = 29;
-            this.labelAusgaben.Text = "Saldo Ausgaben";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(384, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(13, 13);
-            this.label5.TabIndex = 28;
-            this.label5.Text = "€";
-            // 
-            // textBoxSaldoEinkommen
-            // 
-            this.textBoxSaldoEinkommen.Enabled = false;
-            this.textBoxSaldoEinkommen.Location = new System.Drawing.Point(178, 13);
-            this.textBoxSaldoEinkommen.Name = "textBoxSaldoEinkommen";
-            this.textBoxSaldoEinkommen.Size = new System.Drawing.Size(200, 20);
-            this.textBoxSaldoEinkommen.TabIndex = 27;
-            this.textBoxSaldoEinkommen.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // labelEinkommen
-            // 
-            this.labelEinkommen.AutoSize = true;
-            this.labelEinkommen.Location = new System.Drawing.Point(6, 16);
-            this.labelEinkommen.Name = "labelEinkommen";
-            this.labelEinkommen.Size = new System.Drawing.Size(92, 13);
-            this.labelEinkommen.TabIndex = 26;
-            this.labelEinkommen.Text = "Saldo Einkommen";
-            // 
             // groupBoxAndere
             // 
             this.groupBoxAndere.Controls.Add(this.labelZiel2);
@@ -866,6 +702,27 @@ namespace Faidv2.FaidView.M1
             this.labelDispo.TabIndex = 17;
             this.labelDispo.Text = "Dispositiver Kontostand (1 Monat)";
             // 
+            // groupBoxMonatsnormierung
+            // 
+            this.groupBoxMonatsnormierung.Controls.Add(this.label7);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxZinswert);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelZinswert);
+            this.groupBoxMonatsnormierung.Controls.Add(this.label6);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxDiff);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelDiff);
+            this.groupBoxMonatsnormierung.Controls.Add(this.label4);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxSaldoAusgaben);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelAusgaben);
+            this.groupBoxMonatsnormierung.Controls.Add(this.label5);
+            this.groupBoxMonatsnormierung.Controls.Add(this.textBoxSaldoEinkommen);
+            this.groupBoxMonatsnormierung.Controls.Add(this.labelEinkommen);
+            this.groupBoxMonatsnormierung.Location = new System.Drawing.Point(8, 105);
+            this.groupBoxMonatsnormierung.Name = "groupBoxMonatsnormierung";
+            this.groupBoxMonatsnormierung.Size = new System.Drawing.Size(407, 119);
+            this.groupBoxMonatsnormierung.TabIndex = 26;
+            this.groupBoxMonatsnormierung.TabStop = false;
+            this.groupBoxMonatsnormierung.Text = "Monatsnormierung";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -892,6 +749,158 @@ namespace Faidv2.FaidView.M1
             this.labelZinswert.Size = new System.Drawing.Size(47, 13);
             this.labelZinswert.TabIndex = 35;
             this.labelZinswert.Text = "Zinswert";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(384, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 13);
+            this.label6.TabIndex = 34;
+            this.label6.Text = "€";
+            // 
+            // textBoxDiff
+            // 
+            this.textBoxDiff.Enabled = false;
+            this.textBoxDiff.Location = new System.Drawing.Point(178, 65);
+            this.textBoxDiff.Name = "textBoxDiff";
+            this.textBoxDiff.Size = new System.Drawing.Size(200, 20);
+            this.textBoxDiff.TabIndex = 33;
+            this.textBoxDiff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelDiff
+            // 
+            this.labelDiff.AutoSize = true;
+            this.labelDiff.Location = new System.Drawing.Point(6, 68);
+            this.labelDiff.Name = "labelDiff";
+            this.labelDiff.Size = new System.Drawing.Size(160, 13);
+            this.labelDiff.TabIndex = 32;
+            this.labelDiff.Text = "Differenz Einkommen/Ausgaben";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(384, 42);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(13, 13);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "€";
+            // 
+            // textBoxSaldoAusgaben
+            // 
+            this.textBoxSaldoAusgaben.Enabled = false;
+            this.textBoxSaldoAusgaben.Location = new System.Drawing.Point(178, 39);
+            this.textBoxSaldoAusgaben.Name = "textBoxSaldoAusgaben";
+            this.textBoxSaldoAusgaben.Size = new System.Drawing.Size(200, 20);
+            this.textBoxSaldoAusgaben.TabIndex = 30;
+            this.textBoxSaldoAusgaben.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelAusgaben
+            // 
+            this.labelAusgaben.AutoSize = true;
+            this.labelAusgaben.Location = new System.Drawing.Point(6, 42);
+            this.labelAusgaben.Name = "labelAusgaben";
+            this.labelAusgaben.Size = new System.Drawing.Size(85, 13);
+            this.labelAusgaben.TabIndex = 29;
+            this.labelAusgaben.Text = "Saldo Ausgaben";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(384, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(13, 13);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "€";
+            // 
+            // textBoxSaldoEinkommen
+            // 
+            this.textBoxSaldoEinkommen.Enabled = false;
+            this.textBoxSaldoEinkommen.Location = new System.Drawing.Point(178, 13);
+            this.textBoxSaldoEinkommen.Name = "textBoxSaldoEinkommen";
+            this.textBoxSaldoEinkommen.Size = new System.Drawing.Size(200, 20);
+            this.textBoxSaldoEinkommen.TabIndex = 27;
+            this.textBoxSaldoEinkommen.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // labelEinkommen
+            // 
+            this.labelEinkommen.AutoSize = true;
+            this.labelEinkommen.Location = new System.Drawing.Point(6, 16);
+            this.labelEinkommen.Name = "labelEinkommen";
+            this.labelEinkommen.Size = new System.Drawing.Size(92, 13);
+            this.labelEinkommen.TabIndex = 26;
+            this.labelEinkommen.Text = "Saldo Einkommen";
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelDatei,
+            this.toolStripStatusLabelSpring,
+            this.toolStripStatusLabelKontostand,
+            this.toolStripStatusLabelWert,
+            this.toolStripStatusLabelEuro});
+            this.statusStrip.Location = new System.Drawing.Point(0, 451);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelDatei
+            // 
+            this.toolStripStatusLabelDatei.Name = "toolStripStatusLabelDatei";
+            this.toolStripStatusLabelDatei.Size = new System.Drawing.Size(39, 17);
+            this.toolStripStatusLabelDatei.Text = "Status";
+            // 
+            // toolStripStatusLabelSpring
+            // 
+            this.toolStripStatusLabelSpring.Name = "toolStripStatusLabelSpring";
+            this.toolStripStatusLabelSpring.Size = new System.Drawing.Size(649, 17);
+            this.toolStripStatusLabelSpring.Spring = true;
+            this.toolStripStatusLabelSpring.Text = " ";
+            // 
+            // toolStripStatusLabelKontostand
+            // 
+            this.toolStripStatusLabelKontostand.Name = "toolStripStatusLabelKontostand";
+            this.toolStripStatusLabelKontostand.Size = new System.Drawing.Size(71, 17);
+            this.toolStripStatusLabelKontostand.Text = "Kontostand:";
+            // 
+            // toolStripStatusLabelWert
+            // 
+            this.toolStripStatusLabelWert.Name = "toolStripStatusLabelWert";
+            this.toolStripStatusLabelWert.Size = new System.Drawing.Size(13, 17);
+            this.toolStripStatusLabelWert.Text = "0";
+            this.toolStripStatusLabelWert.TextChanged += new System.EventHandler(this.toolStripStatusLabelWert_TextChanged);
+            // 
+            // toolStripStatusLabelEuro
+            // 
+            this.toolStripStatusLabelEuro.Name = "toolStripStatusLabelEuro";
+            this.toolStripStatusLabelEuro.Size = new System.Drawing.Size(13, 17);
+            this.toolStripStatusLabelEuro.Text = "€";
+            // 
+            // openFileDialogKonvertierung
+            // 
+            this.openFileDialogKonvertierung.DefaultExt = "fa";
+            this.openFileDialogKonvertierung.Filter = "Faid v1.4 Dateien|*.fa|Alle Dateien|*.*";
+            this.openFileDialogKonvertierung.Title = "Datei zur Kovertierung auswählen";
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "fa2";
+            this.openFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
+            this.openFileDialog.Title = "Faid v2 Kontodatei öffnen";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "fa2";
+            this.saveFileDialog.Filter = "Faid v2 Dateien|*.fa2|Alle Dateien|*.*";
+            this.saveFileDialog.Title = "Faid v2 Datei speichern";
+            // 
+            // testToolStripMenuItem1
+            // 
+            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
+            this.testToolStripMenuItem1.Size = new System.Drawing.Size(239, 22);
+            this.testToolStripMenuItem1.Text = "Test";
+            this.testToolStripMenuItem1.Click += new System.EventHandler(this.testToolStripMenuItem1_Click);
             // 
             // Maske1
             // 
@@ -928,12 +937,12 @@ namespace Faidv2.FaidView.M1
             ((System.ComponentModel.ISupportInitialize)(this.dgvAusgaben)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZinsen)).EndInit();
             this.tabPlanung.ResumeLayout(false);
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
-            this.groupBoxMonatsnormierung.ResumeLayout(false);
-            this.groupBoxMonatsnormierung.PerformLayout();
             this.groupBoxAndere.ResumeLayout(false);
             this.groupBoxAndere.PerformLayout();
+            this.groupBoxMonatsnormierung.ResumeLayout(false);
+            this.groupBoxMonatsnormierung.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1022,5 +1031,6 @@ namespace Faidv2.FaidView.M1
         private System.Windows.Forms.Label label7;
         private CustomControls.DecimalTextBox textBoxZinswert;
         private System.Windows.Forms.Label labelZinswert;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem1;
     }
 }

@@ -81,7 +81,8 @@ namespace Faidv2.FaidView.M2
             richTextBoxKommentar.Text = kommentar;
 
             // ToDo: Periode Combobox freischalten, wenn implementiert!
-            comboBoxPeriode.Enabled = false;
+            //comboBoxPeriode.Enabled = false;
+            comboBoxPeriode.Enabled = true;
 
             comboModus.Items.Add(M2Ressourcen.ModusEinkommen);
             comboModus.Items.Add(M2Ressourcen.ModusAusgaben);

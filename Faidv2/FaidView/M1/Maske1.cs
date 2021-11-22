@@ -730,5 +730,10 @@ namespace Faidv2.FaidView.M1
             textBoxZinswert.Text = zinswert.ToString();
         }
         #endregion Methoden
+
+        private void testToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Ctrl.PeriodischeVerbuchungenAusfuehren(Konto, DateTime.Now + new TimeSpan(2, 0, 0, 0, 0));
+        }
     }
 }
